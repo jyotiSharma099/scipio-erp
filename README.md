@@ -268,3 +268,7 @@ of The Apache Software Foundation.
      Extensions API)
     * Other classes such as HttpClient and various related ones use
      the JSSE (Java Secure Sockets Extension) API
+
+![Screenshot from 2024-04-27 15-14-56](https://github.com/jyotiSharma099/scipio-erp/assets/86827121/1bdff09b-4f8c-4b0a-876e-334a47d53dbd)
+
+
