@@ -83,7 +83,7 @@ The standard way to get SCIPIO ERP is to checkout the master (main) branch, whic
 provides you with the latest stable version with important updates:
 
 1. Open your command line and run:
-  * git clone https://github.com/ilscipio/scipio-erp.git
+  * git clone https://github.com/jyotiSharma099/scipio-erp.git
   * cd scipio-erp
   * git checkout master
 
@@ -152,7 +152,8 @@ We also provide Docker images if you would like to try out Scipio with minimal e
 To create a fully functional SCIPIO ERP instance with some demo data already loaded, 
 you can create a container with the following command:
 
-  docker create -p 8080:8080 -p 8443:8443 ilscipio/scipio-erp:demo
+   docker build -t ilscipio/scipio-erp:demo .
+   docker run -itd -p 8443:8443 ilscipio/scipio-erp:demo
 
 ### Development
 For developers, the install/start commands above are typically too limited.
