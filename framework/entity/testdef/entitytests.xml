@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<test-suite suite-name="entitytests"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/test-suite.xsd">
+    <test-case case-name="entity-tests"><junit-test-suite class-name="org.ofbiz.entity.test.EntityTestSuite"/></test-case>
+    <test-case case-name="entity-util-tests"><junit-test-suite class-name="org.ofbiz.entity.test.EntityUtilTestSuite"/></test-case>
+    <test-case case-name="entity-crypto-tests"><junit-test-suite class-name="org.ofbiz.entity.test.EntityCryptoTestSuite"/></test-case>
+    <test-case case-name="entity-query-tests"><junit-test-suite class-name="org.ofbiz.entity.test.EntityQueryTestSuite"/></test-case>
+    <test-case case-name="entity-util-properties-tests">
+        <simple-method-test location="component://entity/script/org/ofbiz/entity/test/EntityUtilPropertiesTests.xml"/>
+    </test-case>
+</test-suite>

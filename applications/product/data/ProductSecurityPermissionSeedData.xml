@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<entity-engine-xml>
+    <!-- Catalog Manager security -->
+    <SecurityPermission description="View operations in the Catalog Manager." permissionId="CATALOG_VIEW"/>
+    <SecurityPermission description="Create operations in the Catalog Manager." permissionId="CATALOG_CREATE"/>
+    <SecurityPermission description="Update operations in the Catalog Manager." permissionId="CATALOG_UPDATE"/>
+    <SecurityPermission description="Delete operations in the Catalog Manager." permissionId="CATALOG_DELETE"/>
+    <SecurityPermission description="ALL operations in the Catalog Manager." permissionId="CATALOG_ADMIN"/>
+    <SecurityPermission description="Limited Create operations in the Catalog Manager." permissionId="CATALOG_ROLE_CREATE"/>
+    <SecurityPermission description="Limited Update operations in the Catalog Manager." permissionId="CATALOG_ROLE_UPDATE"/>
+    <SecurityPermission description="Limited Delete operations in the Catalog Manager." permissionId="CATALOG_ROLE_DELETE"/>
+    <SecurityPermission description="To be able to maintain product prices, promotions, and price rules." permissionId="CATALOG_PRICE_MAINT"/>
+    <SecurityPermission description="Allow create/update of 'View Allow' in the Catalog Manager." permissionId="CATALOG_VIEW_ALLOW"/>
+    <SecurityPermission description="Allow create/update of 'Purchase Allow' in the Catalog Manager." permissionId="CATALOG_PURCHASE_ALLOW"/>
+
+    <!-- Image Management security -->
+    <SecurityPermission description="All operations in the Image Management." permissionId="IMAGE_MANAGEMENT_ADMIN"/>
+    <SecurityPermission description="Approve photos in the Image Management." permissionId="IMAGE_MANAGEMENT_APPROVE"/>
+    <SecurityPermission description="Upload photos in the Image Management." permissionId="IMAGE_MANAGEMENT_UPLOAD"/>
+    
+    <!-- add admin to SUPER permission group -->
+    <SecurityGroupPermission groupId="SUPER" permissionId="CATALOG_ADMIN"/>
+    <SecurityGroupPermission groupId="SUPER" permissionId="CATALOG_PRICE_MAINT"/>
+    <SecurityGroupPermission groupId="SUPER" permissionId="CATALOG_VIEW_ALLOW"/>
+    <SecurityGroupPermission groupId="SUPER" permissionId="CATALOG_PURCHASE_ALLOW"/>
+    <SecurityGroupPermission groupId="SUPER" permissionId="IMAGE_MANAGEMENT_ADMIN"/>
+        
+</entity-engine-xml>

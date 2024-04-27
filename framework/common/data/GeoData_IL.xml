@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<entity-engine-xml>
+    <Geo abbreviation="" geoCode="D" geoId="IL-D" geoName="HaDarom" geoTypeId="PROVINCE"/>
+    <Geo abbreviation="" geoCode="M" geoId="IL-M" geoName="HaMerkaz" geoTypeId="PROVINCE"/>
+    <Geo abbreviation="" geoCode="Z" geoId="IL-Z" geoName="HaZafon" geoTypeId="PROVINCE"/>
+    <Geo abbreviation="" geoCode="HA" geoId="IL-HA" geoName="Haifa" geoTypeId="PROVINCE"/>
+    <Geo abbreviation="" geoCode="TA" geoId="IL-TA" geoName="Tel Aviv" geoTypeId="PROVINCE"/>
+    <Geo abbreviation="" geoCode="JM" geoId="IL-JM" geoName="Jerusalem" geoTypeId="PROVINCE"/>
+
+    <GeoAssoc geoId="ISR" geoIdTo="IL-D" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="ISR" geoIdTo="IL-M" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="ISR" geoIdTo="IL-Z" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="ISR" geoIdTo="IL-HA" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="ISR" geoIdTo="IL-TA" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="ISR" geoIdTo="IL-JM" geoAssocTypeId="REGIONS"/>
+</entity-engine-xml>
+

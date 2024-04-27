@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<ofbiz-component name="marketing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/ofbiz-component.xsd">
+    <resource-loader name="main" type="component"/>
+    <classpath type="jar" location="build/lib/*"/>
+    <classpath type="dir" location="config"/>
+    <entity-resource type="model" reader-name="main" loader="main" location="entitydef/entitymodel.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/MarketingTypeData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/MarketingSecurityPermissionSeedData.xml"/>
+    <entity-resource type="data" reader-name="demo" loader="main" location="data/MarketingSecurityGroupDemoData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/MarketingHelpData.xml"/>
+    <entity-resource type="data" reader-name="seed" loader="main" location="data/SfaPortletData.xml"/>
+    <entity-resource type="data" reader-name="demo" loader="main" location="data/sfaDemoData.xml"/>
+    <!-- SCIPIO: Use advanced templates as an example for lead data generation
+    <entity-resource type="data" reader-name="ext" loader="main" location="data/ScipioCRMAccounts.xml"/>
+    <entity-resource type="data" reader-name="ext" loader="main" location="data/ScipioCRMContacts.xml"/>
+    <entity-resource type="data" reader-name="ext" loader="main" location="data/ScipioCRMLeads.xml"/>-->
+    <service-resource type="model" loader="main" location="servicedef/services.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_contact.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_opportunity.xml"/>
+    <service-resource type="eca" loader="main" location="servicedef/secas.xml"/>
+
+    <!-- test suite -->
+    <test-suite loader="main" location="testdef/MarketingTests.xml"/>
+
+    <!-- SCIPIO: since redirect was added, this is conflicting mount-point:
+    <webapp name="marketing"
+        title="Marketing"
+        server="default-server"
+        location="webapp/marketing"
+        app-bar-display="false"
+        base-permission="OFBTOOLS,MARKETING"
+        mount-point="/marketing"/>-->
+    <webapp name="marketingredirect"
+        title="Marketing"
+        server="default-server"
+        location="webapp/marketingredirect"
+        app-bar-display="false"
+        base-permission="OFBTOOLS,MARKETING"
+        mount-point="/marketing"/>
+    <webapp name="CRM"
+        title="CRM"
+        server="default-server"
+        location="webapp/sfa"
+        base-permission="OFBTOOLS,SFA,MARKETING"
+        mount-point="/crm"/>
+    <webapp name="salesForceAutomation"
+        title="SFA"
+        menu-name="secondary"
+        server="default-server"
+        location="webapp/sfaredirect"
+        app-bar-display="false"
+        mount-point="/sfa"/> 
+</ofbiz-component>
+

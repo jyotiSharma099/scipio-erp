@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+<entity-engine-xml>
+    <!-- load data for service ECA global-commit and global-rollback events; these are the values set in the ECA triggered services -->
+    <TestingType testingTypeId="SVC_SECAGC" description="New description for SVC_SECAGC, what it should be after the global-commit test"/>
+    <TestingType testingTypeId="SVC_SECAGR" description="New description for SVC_SECAGR, what it should be after the global-rollback test"/>
+</entity-engine-xml>

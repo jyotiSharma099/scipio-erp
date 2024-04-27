@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+<entity-engine-xml>
+    <!-- SCIPIO: already defined in: component://commonext/data/OfbizSetupSecurityPermissionSeedData.xml
+    <SecurityPermission description="ALL Scipio Setup operations." permissionId="SETUP_ADMIN"/>
+    <SecurityPermission description="Scipio Setup View permission." permissionId="SETUP_VIEW"/>
+
+    <SecurityGroupPermission groupId="SUPER" permissionId="SETUP_ADMIN"/>
+    -->
+</entity-engine-xml>

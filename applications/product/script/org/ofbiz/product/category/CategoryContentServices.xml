@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+    <!-- ProductCategoryContent -->
+    <simple-method method-name="createCategoryContent" short-description="Create Content For Product Category">
+        <make-value entity-name="ProductCategoryContent" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+
+        <if-empty field="newEntity.fromDate">
+            <now-timestamp field="nowTimestamp"/>
+            <set field="newEntity.fromDate" from-field="nowTimestamp"/>
+        </if-empty>
+
+        <create-value value-field="newEntity"/>
+
+        <set-service-fields service-name="updateContent" map="parameters" to-map="updateContent"/>
+        <call-service service-name="updateContent" in-map-name="updateContent"/>
+
+        <field-to-result field="newEntity.contentId" result-name="contentId"/>
+        <field-to-result field="newEntity.productCategoryId" result-name="productCategoryId"/>
+        <field-to-result field="newEntity.prodCatContentTypeId" result-name="prodCatContentTypeId"/>
+    </simple-method>
+    <simple-method method-name="updateCategoryContent" short-description="Update Content For Category">
+        <make-value entity-name="ProductCategoryContent" value-field="lookupPKMap"/>
+        <set-pk-fields map="parameters" value-field="lookupPKMap"/>
+        <find-by-primary-key entity-name="ProductCategoryContent" map="lookupPKMap" value-field="lookedUpValue"/>
+        <set-nonpk-fields map="parameters" value-field="lookedUpValue"/>
+        <store-value value-field="lookedUpValue"/>
+
+        <set-service-fields service-name="updateContent" map="parameters" to-map="updateContent"/>
+        <call-service service-name="updateContent" in-map-name="updateContent">
+             <result-to-result result-name="contentId"/><!-- SCIPIO -->
+        </call-service>
+    </simple-method>
+    <simple-method method-name="removeCategoryContent" short-description="Remove Content From Category">
+        <make-value entity-name="ProductCategoryContent" value-field="lookupPKMap"/>
+        <set-pk-fields map="parameters" value-field="lookupPKMap"/>
+        <find-by-primary-key entity-name="ProductCategoryContent" map="lookupPKMap" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+    <simple-method method-name="createSimpleTextContentForCategory" short-description="Create Simple Text Content For Product Category">
+        <set-service-fields service-name="createCategoryContent" map="parameters" to-map="createCategoryContentMap"/>
+        <set-service-fields service-name="createSimpleTextContent" map="parameters" to-map="createSimpleTextMap"/>
+        <call-service service-name="createSimpleTextContent" in-map-name="createSimpleTextMap">
+            <result-to-field result-name="contentId" field="createCategoryContentMap.contentId"/>
+        </call-service>
+        <call-service service-name="createCategoryContent" in-map-name="createCategoryContentMap">
+            <result-to-result result-name="contentId" /><!-- SCIPIO -->
+        </call-service>
+
+    </simple-method>
+    <simple-method method-name="updateSimpleTextContentForCategory" short-description="Update Simple Text Content For Product Category">
+        <set-service-fields service-name="updateCategoryContent" map="parameters" to-map="updateCategoryContent"/>
+        <call-service service-name="updateCategoryContent" in-map-name="updateCategoryContent">
+            <result-to-result result-name="contentId" /><!-- SCIPIO -->
+        </call-service>
+        <set-service-fields service-name="updateSimpleTextContent" map="parameters" to-map="updateSimpleText"/>
+        <call-service service-name="updateSimpleTextContent" in-map-name="updateSimpleText"/>
+    </simple-method>
+
+    <simple-method method-name="updateContentSEOForCategory" short-description="Update SEO Content For Product Category">
+        <if-not-empty field="parameters.title">
+            <entity-and entity-name="ProductCategoryContentAndInfo" list="productCategoryContents">
+                <field-map field-name="productCategoryId" from-field="parameters.productCategoryId"/>
+                <field-map field-name="prodCatContentTypeId" value="PAGE_TITLE"/>
+            </entity-and>
+            <if-not-empty field="productCategoryContents">
+                <first-from-list entry="productCategoryContent" list="productCategoryContents"/>
+                <entity-one entity-name="ElectronicText" value-field="electronicText">
+                    <field-map field-name="dataResourceId" from-field="productCategoryContent.dataResourceId"/>
+                </entity-one>
+                <if-not-empty field="electronicText">
+                    <set field="electronicText.textData" from-field="parameters.title"/>
+                    <store-value value-field="electronicText"/>
+                </if-not-empty>
+                <field-to-result field="productCategoryContent.contentId" result-name="contentId" /><!-- SCIPIO -->
+            <else>
+                <set field="createTextContentMap.productCategoryId" from-field="parameters.productCategoryId"/>
+                <set field="createTextContentMap.prodCatContentTypeId" value="PAGE_TITLE"/>
+                <set field="createTextContentMap.text" from-field="parameters.title"/>
+                <call-service service-name="createSimpleTextContentForCategory" in-map-name="createTextContentMap">
+                    <result-to-result result-name="contentId" /><!-- SCIPIO -->
+                </call-service>
+            </else>
+            </if-not-empty>
+        </if-not-empty>
+        <if-not-empty field="parameters.metaKeyword">
+            <entity-and entity-name="ProductCategoryContentAndInfo" list="productCategoryContents">
+                <field-map field-name="productCategoryId" from-field="parameters.productCategoryId"/>
+                <field-map field-name="prodCatContentTypeId" value="META_KEYWORD"/>
+            </entity-and>
+            <if-not-empty field="productCategoryContents">
+                <first-from-list entry="productCategoryContent" list="productCategoryContents"/>
+                <entity-one entity-name="ElectronicText" value-field="electronicText">
+                    <field-map field-name="dataResourceId" from-field="productCategoryContent.dataResourceId"/>
+                </entity-one>
+                <if-not-empty field="electronicText">
+                    <set field="electronicText.textData" from-field="parameters.metaKeyword"/>
+                    <store-value value-field="electronicText"/>
+                </if-not-empty>
+                <field-to-result field="productCategoryContent.contentId" result-name="contentId" /><!-- SCIPIO -->
+            <else>
+                <set field="createTextContentMap.productCategoryId" from-field="parameters.productCategoryId"/>
+                <set field="createTextContentMap.prodCatContentTypeId" value="META_KEYWORD"/>
+                <set field="createTextContentMap.text" from-field="parameters.metaKeyword"/>
+                <call-service service-name="createSimpleTextContentForCategory" in-map-name="createTextContentMap">
+                    <result-to-result result-name="contentId" /><!-- SCIPIO -->
+                </call-service>
+            </else>
+            </if-not-empty>
+        </if-not-empty>
+        <if-not-empty field="parameters.metaDescription">
+            <entity-and entity-name="ProductCategoryContentAndInfo" list="productCategoryContents">
+                <field-map field-name="productCategoryId" from-field="parameters.productCategoryId"/>
+                <field-map field-name="prodCatContentTypeId" value="META_DESCRIPTION"/>
+            </entity-and>
+            <if-not-empty field="productCategoryContents">
+                <first-from-list entry="productCategoryContent" list="productCategoryContents"/>
+                <entity-one entity-name="ElectronicText" value-field="electronicText">
+                    <field-map field-name="dataResourceId" from-field="productCategoryContent.dataResourceId"/>
+                </entity-one>
+                <if-not-empty field="electronicText">
+                    <set field="electronicText.textData" from-field="parameters.metaDescription"/>
+                    <store-value value-field="electronicText"/>
+                </if-not-empty>
+                <field-to-result field="productCategoryContent.contentId" result-name="contentId" /><!-- SCIPIO -->
+            <else>
+                <set field="createTextContentMap.productCategoryId" from-field="parameters.productCategoryId"/>
+                <set field="createTextContentMap.prodCatContentTypeId" value="META_DESCRIPTION"/>
+                <set field="createTextContentMap.text" from-field="parameters.metaDescription"/>
+                <call-service service-name="createSimpleTextContentForCategory" in-map-name="createTextContentMap">
+                    <result-to-result result-name="contentId" /><!-- SCIPIO -->
+                </call-service>
+            </else>
+            </if-not-empty>
+        </if-not-empty>
+    </simple-method>
+
+    <simple-method method-name="createRelatedUrlContentForCategory" short-description="Create Related URL Content For Product Category">
+        <set field="dataResource.dataResourceName" from-field="parameters.title"/>
+        <set field="dataResource.dataResourceTypeId" value="URL_RESOURCE"/>
+        <set field="dataResource.mimeTypeId" value="text/plain"/>
+        <set field="url" value="${groovy: temp = parameters.url;
+            temp = temp.trim();
+            if(temp.indexOf(&quot;http://&quot;) == 0) return temp;
+            if(temp.indexOf(&quot;https://&quot;) == 0) return temp;
+            if(temp.indexOf(&quot;http://&quot;) != 0) return &quot;http://&quot; + temp;
+        }" type="String"/>
+        <set field="dataResource.objectInfo" from-field="url"/>
+        <set field="dataResource.localeString" from-field="parameters.localeString"/>
+        <call-service service-name="createDataResource" in-map-name="dataResource">
+            <result-to-field result-name="dataResourceId" field="parameters.dataResourceId"/>
+        </call-service>
+
+        <set field="content.contentTypeId" value="DOCUMENT"/>
+        <set field="content.dataResourceId" from-field="parameters.dataResourceId"/>
+        <set field="content.contentName" from-field="parameters.title"/>
+        <set field="content.description" from-field="parameters.description"/>
+        <set field="content.localeString" from-field="parameters.localeString"/>
+        <set field="content.createdByUserLogin" from-field="userLogin.userLoginId"/>
+        <call-service service-name="createContent" in-map-name="content">
+            <result-to-field result-name="contentId" field="parameters.contentId"/>
+        </call-service>
+
+        <set-service-fields service-name="createCategoryContent" map="parameters" to-map="createCategoryContentMap"/>
+        <call-service service-name="createCategoryContent" in-map-name="createCategoryContentMap">
+            <result-to-result result-name="contentId" /><!-- SCIPIO -->
+        </call-service>
+    </simple-method>
+    <simple-method method-name="updateRelatedUrlContentForCategory" short-description="Update Related URL Content For Product Category">
+        <set-service-fields service-name="updateCategoryContent" map="parameters" to-map="updateCategoryContent"/>
+        <call-service service-name="updateCategoryContent" in-map-name="updateCategoryContent"/>
+
+        <set field="dataResource.dataResourceId" from-field="parameters.dataResourceId"/>
+        <set field="dataResource.dataResourceName" from-field="parameters.title"/>
+        <set field="dataResource.objectInfo" from-field="parameters.url"/>
+        <set field="dataResource.localeString" from-field="parameters.localeString"/>
+        <call-service service-name="updateDataResource" in-map-name="dataResource"/>
+
+        <set field="updateContent.contentId" from-field="parameters.contentId"/>
+        <set field="updateContent.contentName" from-field="parameters.title"/>
+        <set field="updateContent.description" from-field="parameters.description"/>
+        <set field="updateContent.localeString" from-field="parameters.localeString"/>
+        <call-service service-name="updateContent" in-map-name="updateContent">
+            <result-to-result result-name="contentId" /><!-- SCIPIO -->
+        </call-service>
+    </simple-method>
+
+    <simple-method method-name="createDownloadContentForCategory" short-description="Create Download Content For Category">
+        <set-service-fields service-name="createCategoryContent" map="parameters" to-map="createCategoryContent"/>
+        <!-- Create Data Resource -->
+        <set field="data.dataResourceTypeId" from-field="parameters.dataResourceTypeId"/>
+        <set field="data.dataResourceName" from-field="parameters._imageData_fileName"/>
+        <set field="data.mimeTypeId" from-field="parameters._imageData_contentType"/>
+        <set field="data.uploadedFile" from-field="parameters.imageData"/>
+        <call-service service-name="createDataResource" in-map-name="data">
+            <result-to-field result-name="dataResourceId" field="parameters.dataResourceId"/>
+        </call-service>
+        <!-- Create attach upload to data resource -->
+        <set-service-fields service-name="attachUploadToDataResource" map="parameters" to-map="attachMap"/>
+        <set field="attachMap.uploadedFile" from-field="parameters.imageData"/>
+        <set field="attachMap._uploadedFile_fileName" from-field="parameters._imageData_fileName"/>
+        <set field="attachMap._uploadedFile_contentType" from-field="parameters._imageData_contentType"/>
+        <call-service service-name="attachUploadToDataResource" in-map-name="attachMap"/>
+        <!-- Create content from dataResource -->
+        <set-service-fields service-name="createContentFromDataResource" map="parameters" to-map="contentMap"/>
+        <set field="contentMap.contentTypeId" value="DOCUMENT"/>
+        <call-service service-name="createContentFromDataResource" in-map-name="contentMap">
+            <result-to-field result-name="contentId" field="createCategoryContent.contentId"/>
+        </call-service>
+
+        <set field="createCategoryContent.contentId" from-field="parameters.contentId"/>
+        <call-service service-name="createCategoryContent" in-map-name="createCategoryContent">
+            <result-to-result result-name="contentId" /><!-- SCIPIO -->
+        </call-service>
+    </simple-method>
+
+    <simple-method method-name="updateDownloadContentForCategory" short-description="Update Download Content For Category">
+        <set field="attachMap.uploadedFile" from-field="parameters.imageData"/>
+        <set field="attachMap._uploadedFile_fileName" from-field="parameters._imageData_fileName"/>
+        <set field="attachMap._uploadedFile_contentType" from-field="parameters._imageData_contentType"/>
+        <set field="attachMap.mimeTypeId" from-field="parameters._imageData_contentType"/>
+        <set field="attachMap.dataResourceId" from-field="parameters.fileDataResourceId"/>
+        <call-service service-name="attachUploadToDataResource" in-map-name="attachMap"/>
+
+        <set-service-fields service-name="updateCategoryContent" map="parameters" to-map="updateCategoryContent"/>
+        <call-service service-name="updateCategoryContent" in-map-name="updateCategoryContent">
+            <result-to-result result-name="contentId" /><!-- SCIPIO -->
+        </call-service>
+    </simple-method>
+
+    <!-- SCIPIO: new service to upload category additional images, based on uploadProductAdditionalViewImages -->
+    <simple-method method-name="uploadCategoryAdditionalViewImages" short-description="Method to upload multiple Additional View images for category">
+        <set-service-fields service-name="addAdditionalViewForCategory" map="parameters" to-map="addAdditionalViewForCategoryMap"/>
+        <if-not-empty field="parameters.additionalImageOne">
+            <set field="addAdditionalViewForCategoryMap.productCategoryId" from-field="parameters.productCategoryId"/>
+            <set field="addAdditionalViewForCategoryMap.uploadedFile" from-field="parameters.additionalImageOne"/>
+            <set field="addAdditionalViewForCategoryMap.prodCatContentTypeId" value="ADDITIONAL_IMAGE_1"/>
+            <set field="addAdditionalViewForCategoryMap._uploadedFile_fileName" from-field="parameters._additionalImageOne_fileName"/>
+            <set field="addAdditionalViewForCategoryMap._uploadedFile_contentType" from-field="parameters._additionalImageOne_contentType"/>
+            <set field="addAdditionalViewForCategoryMap.imageProfile" from-field="parameters.additionalImageOne_imageProfile"/>
+            <call-service service-name="addAdditionalViewForCategory" in-map-name="addAdditionalViewForCategoryMap"/>
+            <clear-field field="addAdditionalViewForCategoryMap"/>
+        </if-not-empty>
+        <if-not-empty field="parameters.additionalImageTwo">
+            <set field="addAdditionalViewForCategoryMap.productCategoryId" from-field="parameters.productCategoryId"/>
+            <set field="addAdditionalViewForCategoryMap.uploadedFile" from-field="parameters.additionalImageTwo"/>
+            <set field="addAdditionalViewForCategoryMap.prodCatContentTypeId" value="ADDITIONAL_IMAGE_2"/>
+            <set field="addAdditionalViewForCategoryMap._uploadedFile_fileName" from-field="parameters._additionalImageTwo_fileName"/>
+            <set field="addAdditionalViewForCategoryMap._uploadedFile_contentType" from-field="parameters._additionalImageTwo_contentType"/>
+            <set field="addAdditionalViewForCategoryMap.imageProfile" from-field="parameters.additionalImageTwo_imageProfile"/>
+            <call-service service-name="addAdditionalViewForCategory" in-map-name="addAdditionalViewForCategoryMap"/>
+            <clear-field field="addAdditionalViewForCategoryMap"/>
+        </if-not-empty>
+        <if-not-empty field="parameters.additionalImageThree">
+            <set field="addAdditionalViewForCategoryMap.productCategoryId" from-field="parameters.productCategoryId"/>
+            <set field="addAdditionalViewForCategoryMap.uploadedFile" from-field="parameters.additionalImageThree"/>
+            <set field="addAdditionalViewForCategoryMap.prodCatContentTypeId" value="ADDITIONAL_IMAGE_3"/>
+            <set field="addAdditionalViewForCategoryMap._uploadedFile_fileName" from-field="parameters._additionalImageThree_fileName"/>
+            <set field="addAdditionalViewForCategoryMap._uploadedFile_contentType" from-field="parameters._additionalImageThree_contentType"/>
+            <set field="addAdditionalViewForCategoryMap.imageProfile" from-field="parameters.additionalImageThree_imageProfile"/>
+            <call-service service-name="addAdditionalViewForCategory" in-map-name="addAdditionalViewForCategoryMap"/>
+            <clear-field field="addAdditionalViewForCategoryMap"/>
+        </if-not-empty>
+        <if-not-empty field="parameters.additionalImageFour">
+            <set field="addAdditionalViewForCategoryMap.productCategoryId" from-field="parameters.productCategoryId"/>
+            <set field="addAdditionalViewForCategoryMap.uploadedFile" from-field="parameters.additionalImageFour"/>
+            <set field="addAdditionalViewForCategoryMap.prodCatContentTypeId" value="ADDITIONAL_IMAGE_4"/>
+            <set field="addAdditionalViewForCategoryMap._uploadedFile_fileName" from-field="parameters._additionalImageFour_fileName"/>
+            <set field="addAdditionalViewForCategoryMap._uploadedFile_contentType" from-field="parameters._additionalImageFour_contentType"/>
+            <set field="addAdditionalViewForCategoryMap.imageProfile" from-field="parameters.additionalImageFour_imageProfile"/>
+            <call-service service-name="addAdditionalViewForCategory" in-map-name="addAdditionalViewForCategoryMap"/>
+            <clear-field field="addAdditionalViewForCategoryMap"/>
+        </if-not-empty>
+        <field-to-result field="parameters.productCategoryId" result-name="productCategoryId"/>
+    </simple-method>
+
+</simple-methods>

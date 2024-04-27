@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+<entity-engine-xml>
+    <EnumerationType description="Entity Sync Include Application Type" enumTypeId="ENTSYNC_INC_APPL" hasTable="N" parentTypeId=""/>
+    <Enumeration description="Include" enumCode="INCLUDE" enumId="ESIA_INCLUDE" sequenceId="01" enumTypeId="ENTSYNC_INC_APPL"/>
+    <Enumeration description="Exclude" enumCode="EXCLUDE" enumId="ESIA_EXCLUDE" sequenceId="02" enumTypeId="ENTSYNC_INC_APPL"/>
+    <Enumeration description="Always Include" enumCode="ALWAYS" enumId="ESIA_ALWAYS" sequenceId="03" enumTypeId="ENTSYNC_INC_APPL"/>
+
+    <!-- Entity Sync Run Status -->
+    <StatusType description="Entity Sync Run" hasTable="N" parentTypeId="" statusTypeId="ENTSYNC_RUN"/>
+    <StatusItem description="Not Started" sequenceId="01" statusCode="NOT_STARTED" statusId="ESR_NOT_STARTED" statusTypeId="ENTSYNC_RUN"/>
+    <StatusItem description="Running" sequenceId="02" statusCode="RUNNING" statusId="ESR_RUNNING" statusTypeId="ENTSYNC_RUN"/>
+    <StatusItem description="Offline Pending" sequenceId="03" statusCode="PENDING" statusId="ESR_PENDING" statusTypeId="ENTSYNC_RUN"/>
+    <StatusItem description="Complete" sequenceId="04" statusCode="COMPLETE" statusId="ESR_COMPLETE" statusTypeId="ENTSYNC_RUN"/>
+    <StatusItem description="Other Error" sequenceId="97" statusCode="OTHER_ERROR" statusId="ESR_OTHER_ERROR" statusTypeId="ENTSYNC_RUN"/>
+    <StatusItem description="Service Call Error" sequenceId="98" statusCode="SERVICE_ERROR" statusId="ESR_SERVICE_ERROR" statusTypeId="ENTSYNC_RUN"/>
+    <StatusItem description="Data Error" sequenceId="99" statusCode="DATA_ERROR" statusId="ESR_DATA_ERROR" statusTypeId="ENTSYNC_RUN"/>
+</entity-engine-xml>

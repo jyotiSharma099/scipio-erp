@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<#--
+SCIPIO: Template for generic Scipio Shop products.
+
+TODO: Should group entities together so faster data load, but can't without globals
+NOTE: This template does not support globals as-is (#global)
+-->
+<entity-engine-xml>
+    <#recurse doc>
+</entity-engine-xml>
+
+<#macro products>
+    <#recurse .node>
+</#macro>
+
+<#macro product>
+    <#-- WARN: productId must be short (7 chars or less) -->
+    <#local productId = .node.@productId[0]>
+    <#local productName = .node.@productName[0]>
+    <#local productCategoryId = .node.@productCategoryId[0]>
+    <#if !productCategoryId?has_content && .node?parent.@catId[0]?has_content>
+        <#local productCategoryId = .node?parent.@catId[0]>
+    </#if>
+
+    <#local extraCategoryId1 = (.node.@extraCategoryId1[0])!"">
+    <#local extraCategoryId2 = (.node.@extraCategoryId2[0])!"">
+
+    <#local productTypeId = (.node.@productTypeId[0])!"">
+    <#if !productTypeId?has_content>
+        <#local productTypeId = "FINISHED_GOOD">
+    </#if>
+
+    <#local urlName = (.node.@urlName[0])!"">
+    <#if !urlName?has_content>
+        <#local urlName = productName?lower_case?replace(r"\s+", "-", "r")?replace(r"[^a-z0-9-]", "", "r")>
+    </#if>
+
+    <#local description = (.node.@description[0])!"">
+    <#if !description?has_content>
+      <#local description = productName>
+    </#if>
+    <#local longDescription = (.node.@longDescription[0])!.node.longDescription!"">
+    <#if !longDescription?has_content>
+      <#local longDescription = description>
+    </#if>
+
+    <#local listPrice = (.node.@listPrice[0])!"">
+    <#local defaultPrice = (.node.@defaultPrice[0])!"">
+    <#local minimumOrderPrice = (.node.@minimumOrderPrice[0])!"">
+
+    <#local inventoryItemId = (.node.@inventoryItemId[0])!"">
+    <#if !inventoryItemId?has_content>
+      <#local inventoryItemId = "INV-" + productId>
+    </#if>
+
+    <#local inventoryQuantity = (.node.@inventoryQuantity[0])!"">
+    <#if !inventoryQuantity?has_content>
+      <#local inventoryQuantity = "500">
+    </#if>
+
+    <#local quantityIncluded = (.node.@quantityIncluded[0])!"">
+    <#local quantityUomId = (.node.@quantityUomId[0])!"">
+    <#local piecesIncluded = (.node.@piecesIncluded[0])!"">
+    <#local isVirtual = (.node.@isVirtual[0])!"">
+    <#local isVariant = (.node.@isVariant[0])!"">
+    <#local virtualVariantMethodEnum = (.node.@virtualVariantMethodEnum[0])!"">
+    <#local weight = (.node.@weight[0])!"">
+
+    <Product productId="${productId}" productTypeId="${productTypeId}" primaryProductCategoryId="${productCategoryId}" productName="${productName?xml}"
+    internalName="${productName?xml}" description="${description?xml}" longDescription="${longDescription?xml}"
+    taxable="Y" chargeShipping="Y" autoCreateKeywords="Y" isVirtual="${isVirtual!"N"}" isVariant="${isVariant!"N"}" <#if virtualVariantMethodEnum?has_content>virtualVariantMethodEnum="${virtualVariantMethodEnum}"</#if>
+    createdDate="2001-05-13 12:00:00.0" createdByUserLogin="admin" lastModifiedDate="2001-05-13 12:00:00.0"
+    lastModifiedByUserLogin="admin"
+        <#if quantityIncluded?has_content> quantityIncluded="${quantityIncluded}"</#if>
+        <#if quantityUomId?has_content> quantityUomId="${quantityUomId}"</#if>
+        <#if piecesIncluded?has_content> piecesIncluded="${piecesIncluded}"</#if>
+        <#if weight?has_content> weight="${weight}"</#if>
+    />
+
+    <DataResource dataResourceTypeId="ELECTRONIC_TEXT" dataResourceId="${productId}-ALT" localeString="en"/>
+    <DataResource dataResourceTypeId="ELECTRONIC_TEXT" dataResourceId="DR${productId}-ALTEN" localeString="en_US"/>
+
+    <ElectronicText dataResourceId="${productId}-ALT" textData="${urlName}"/>
+    <ElectronicText dataResourceId="DR${productId}-ALTEN" textData="${urlName}"/>
+
+    <Content contentId="${productId}-ALT" contentTypeId="DOCUMENT" dataResourceId="${productId}-ALT" localeString="en"/>
+    <Content contentId="C${productId}-ALTEN" contentTypeId="DOCUMENT" dataResourceId="DR${productId}-ALTEN" localeString="en_US"/>
+
+    <ContentAssoc contentId="${productId}-ALT" contentIdTo="C${productId}-ALTEN" contentAssocTypeId="ALTERNATE_LOCALE" fromDate="2011-04-26 12:00:00.0"/>
+
+    <ProductContent productId="${productId}" contentId="${productId}-ALT" productContentTypeId="ALTERNATIVE_URL" fromDate="2001-05-13 12:00:00.0"/>
+
+    <#if defaultPrice?has_content>
+    <ProductPrice productId="${productId}" productPricePurposeId="PURCHASE" productPriceTypeId="DEFAULT_PRICE" currencyUomId="USD" productStoreGroupId="_NA_" fromDate="2001-05-13 12:00:00.0" price="${defaultPrice}" createdDate="2001-05-13 12:00:00.0" createdByUserLogin="admin" lastModifiedDate="2001-05-13 12:00:00.0" lastModifiedByUserLogin="admin"/>
+    </#if>
+    <#if listPrice?has_content>
+    <ProductPrice productId="${productId}" productPricePurposeId="PURCHASE" productPriceTypeId="LIST_PRICE" currencyUomId="USD" productStoreGroupId="_NA_" fromDate="2001-05-13 12:00:00.0" price="${listPrice}" createdDate="2001-05-13 12:00:00.0" createdByUserLogin="admin" lastModifiedDate="2001-05-13 12:00:00.0" lastModifiedByUserLogin="admin"/>
+    </#if>
+    <#if minimumOrderPrice?has_content>
+    <ProductPrice productId="${productId}" productPricePurposeId="PURCHASE" productPriceTypeId="MINIMUM_ORDER_PRICE" currencyUomId="USD" productStoreGroupId="_NA_" fromDate="2001-05-13 12:00:00.0" price="${minimumOrderPrice}" createdDate="2001-05-13 12:00:00.0" createdByUserLogin="admin" lastModifiedDate="2001-05-13 12:00:00.0" lastModifiedByUserLogin="admin"/>
+    </#if>
+
+    <ProductCategoryMember productCategoryId="${productCategoryId}" productId="${productId}" fromDate="2001-05-13 12:00:00.0"/>
+    <#if extraCategoryId1?has_content>
+    <ProductCategoryMember productCategoryId="${extraCategoryId1}" productId="${productId}" fromDate="2001-05-13 12:00:00.0"/>
+    </#if>
+    <#if extraCategoryId2?has_content>
+    <ProductCategoryMember productCategoryId="${extraCategoryId2}" productId="${productId}" fromDate="2001-05-13 12:00:00.0"/>
+    </#if>
+
+    <ProductFacility productId="${productId}" facilityId="ScipioShopWarehouse" minimumStock="2" reorderQuantity="10" daysToShip="2"/>
+    <ProductFacilityLocation productId="${productId}" facilityId="ScipioShopWarehouse" locationSeqId="TLTLTLUL02" minimumStock="2" moveQuantity="20"/>
+    <InventoryItem facilityId="ScipioShopWarehouse" locationSeqId="TLTLTLUL02" datetimeReceived="2008-08-01 08:00:00.000"
+    inventoryItemId="${inventoryItemId}" inventoryItemTypeId="NON_SERIAL_INV_ITEM" productId="${productId}" ownerPartyId="Company" currencyUomId="USD" unitCost="3.0"/>
+    <InventoryItemDetail inventoryItemId="${inventoryItemId}" inventoryItemDetailSeqId="0001" effectiveDate="2001-05-13 12:00:00.0" availableToPromiseDiff="${inventoryQuantity}" quantityOnHandDiff="${inventoryQuantity}" accountingQuantityDiff="${inventoryQuantity}"/>
+
+    <#-- Product alt urls. Added 2018-11-07 -->
+    <DataResource dataResourceId="${productId}-ALT" dataResourceTypeId="ELECTRONIC_TEXT" lastUpdatedStamp="2017-12-12 22:27:26.907" lastUpdatedTxStamp="2017-12-12 22:27:26.889" createdStamp="2017-12-12 22:25:08.337" createdTxStamp="2017-12-12 22:25:07.512"/>
+    <ElectronicText dataResourceId="${productId}-ALT" lastUpdatedStamp="2017-12-12 22:27:26.891" lastUpdatedTxStamp="2017-12-12 22:27:26.889" createdStamp="2017-12-12 22:25:08.37" createdTxStamp="2017-12-12 22:25:07.512">
+    <textData><![CDATA[${productName}-${productId}]]></textData>
+    </ElectronicText>
+    <Content contentId="${productId}-ALT" contentTypeId="DOCUMENT" dataResourceId="${productId}-ALT" lastUpdatedStamp="2017-12-12 22:27:26.894" lastUpdatedTxStamp="2017-12-12 22:27:26.889" createdStamp="2017-12-12 22:25:08.389" createdTxStamp="2017-12-12 22:25:07.512"/>
+    <ProductContent productId="${productId}" contentId="${productId}-ALT" productContentTypeId="ALTERNATIVE_URL" fromDate="2001-05-13 12:00:00.0" lastUpdatedStamp="2017-12-12 22:25:08.816" lastUpdatedTxStamp="2017-12-12 22:25:07.512" createdStamp="2017-12-12 22:25:08.816" createdTxStamp="2017-12-12 22:25:07.512"/>
+
+    <#-- Product child nodes, for image and others. Added 2017-07-07. -->
+    <#if .node?children?has_content>
+        <#recurse .node>
+    </#if>
+</#macro>
+
+<#-- image element, child of product. Can create auto-resized images. Added 2017-07-07. -->
+<#macro image>
+    <#-- Scale images -->
+    <#local productId = .node?parent.@productId[0]?string/>
+    <#local imageUrl = (.node.@imageUrl[0])?string/>
+    <#local imageServerPath = (.node.@imageServerPath[0]!)?string/>
+    <#local imageNr = ((.node.@imageNr[0])!"0")?string?number?int/>
+    <#local copyOrig = ((.node.@copyOrig[0])!"false")?string?boolean/><#-- TODO: REVIEW: not clear if want this true or false by default, lots of implications, could affect macro usage (if false) -->
+    <#if (imageNr > 0)>
+        <#local productContentTypeId = "ADDITIONAL_IMAGE_" + imageNr>
+    <#else>
+        <#local productContentTypeId = "ORIGINAL_IMAGE_URL">
+    </#if>
+    <#local dummy = Debug.logInfo("Queueing productImageAutoRescale for product [" + productId + "]", "commonproduct.ftl")!>
+    <#-- TODO: could try async-memory but it's currently unable to finish before end of data load and get canceled -->
+    <ProductImageOpRequest serviceId="productImageAutoRescale" mode="sync" productId="${productId}">
+        <serviceArgsJson><![CDATA[{
+            "productId":"${productId}", "recreateExisting":true, "productContentTypeId":"${productContentTypeId}",
+            "imageOrigUrl":"${imageUrl}", "copyOrig":${copyOrig?c}
+        }]]></serviceArgsJson>
+    </ProductImageOpRequest>
+</#macro>
+
+<#macro productFeatureAppl>
+    <#-- Scale images -->
+    <#local productId = .node?parent.@productId[0]?string/>
+    <#local productFeatureId = (.node.@productFeatureId[0])?string/>
+    <#local productFeatureApplTypeId = (.node.@productFeatureApplTypeId[0])?string/>
+    <#local sequenceNum = (.node.@sequenceNum[0])?string/>
+    <ProductFeatureAppl productId="${productId}" productFeatureId="${productFeatureId}"
+    productFeatureApplTypeId="${productFeatureApplTypeId}" fromDate="2001-05-13 12:00:00.0" sequenceNum="${sequenceNum}"/>
+</#macro>
+
+<#macro @element>
+</#macro>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<!--
+    SCIPIO: Default content image resizing/splitting discrete dimensions (see also: component://product/config/ImageProperties.xml)
+    Entry format:
+    <size name="[((string)) Exact or abstracted size name, used in filename]">
+        <dimension name="height" value="[((int), required) Height]"/>
+        <dimension name="width" value="[((int), required) Width]"/>
+        <type name="format" value="[((string), default: same as original) File format extension, e.g: jpg, webp; see FileExtension entity]"/>
+        <config name="upscaleMode" value="[(on|off|omit, default: on) What to do when both dimensions are larger than original]"/>
+    </size>
+-->
+<!-- 
+    # The uploaded image is scaled in each size type; you can decrease or increase size types; size type name shouldn't contain space
+    # Just one configured dimension on two is allowed to restrict just one image dimension, whatever its proportions
+-->
+<imageSize xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <size name="small">
+        <dimension name="height" value="256"/>
+        <dimension name="width" value="256"/>
+    </size>
+    <size name="medium">
+        <dimension name="height" value="480"/>
+        <dimension name="width" value="640"/>
+    </size>
+    <size name="large">
+        <dimension name="height" value="768"/>
+        <dimension name="width" value="1024"/>
+    </size>
+    <size name="detail">
+        <dimension name="height" value="900"/>
+        <dimension name="width" value="1440"/>
+    </size>
+    <size name="100x75">
+        <dimension name="height" value="75"/>
+        <dimension name="width" value="100"/>
+    </size>
+    <size name="150x112">
+        <dimension name="height" value="112"/>
+        <dimension name="width" value="150"/>
+    </size>
+    <size name="320x240">
+        <dimension name="height" value="240"/>
+        <dimension name="width" value="320"/>
+    </size>
+    <size name="640x480">
+        <dimension name="height" value="480"/>
+        <dimension name="width" value="640"/>
+    </size>
+    <size name="800x600">
+        <dimension name="height" value="600"/>
+        <dimension name="width" value="800"/>
+    </size>
+    <size name="1024x768">
+        <dimension name="height" value="768"/>
+        <dimension name="width" value="1024"/>
+    </size>
+    <size name="1280x1024">
+        <dimension name="height" value="1024"/>
+        <dimension name="width" value="1280"/>
+    </size>
+    <size name="1600x1200">
+        <dimension name="height" value="1200"/>
+        <dimension name="width" value="1600"/>
+    </size>
+    <size name="thumbnail">
+        <dimension name="height" value="100"/>
+        <dimension name="width" value="100"/>
+    </size>
+
+    <!-- WEBP -->
+    <size name="small-sc">
+        <dimension name="height" value="256"/>
+        <dimension name="width" value="256"/>
+        <type name="format" value="webp"/>
+    </size>
+    <size name="medium-sc">
+        <dimension name="height" value="480"/>
+        <dimension name="width" value="640"/>
+        <type name="format" value="webp"/>
+    </size>
+    <size name="large-sc">
+        <dimension name="height" value="768"/>
+        <dimension name="width" value="1024"/>
+        <type name="format" value="webp"/>
+    </size>
+    <size name="detail-sc">
+        <dimension name="height" value="900"/>
+        <dimension name="width" value="1440"/>
+        <type name="format" value="webp"/>
+    </size>
+    <size name="100x75-sc">
+        <dimension name="height" value="75"/>
+        <dimension name="width" value="100"/>
+        <type name="format" value="webp"/>
+    </size>
+    <size name="150x112-sc">
+        <dimension name="height" value="112"/>
+        <dimension name="width" value="150"/>
+        <type name="format" value="webp"/>
+    </size>
+    <size name="320x240-sc">
+        <dimension name="height" value="240"/>
+        <dimension name="width" value="320"/>
+        <type name="format" value="webp"/>
+    </size>
+    <size name="640x480-sc">
+        <dimension name="height" value="480"/>
+        <dimension name="width" value="640"/>
+        <type name="format" value="webp"/>
+    </size>
+    <size name="800x600-sc">
+        <dimension name="height" value="600"/>
+        <dimension name="width" value="800"/>
+        <type name="format" value="webp"/>
+    </size>
+    <size name="1024x768-sc">
+        <dimension name="height" value="768"/>
+        <dimension name="width" value="1024"/>
+        <type name="format" value="webp"/>
+    </size>
+    <size name="1280x1024-sc">
+        <dimension name="height" value="1024"/>
+        <dimension name="width" value="1280"/>
+        <type name="format" value="webp"/>
+    </size>
+    <size name="1600x1200-sc">
+        <dimension name="height" value="1200"/>
+        <dimension name="width" value="1600"/>
+        <type name="format" value="webp"/>
+    </size>
+    <size name="thumbnail-sc">
+        <dimension name="height" value="100"/>
+        <dimension name="width" value="100"/>
+        <type name="format" value="webp"/>
+    </size>
+</imageSize>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<entity-engine-xml>
+
+    <!-- Note: if you set require pin code to N, then you can set validate GC FinAcct to Y -->
+    <ProductStoreFinActSetting productStoreId="ScipioShop" finAccountTypeId="GIFTCERT_ACCOUNT" requirePinCode="N" validateGCFinAcct="Y"
+        purchaseSurveyId="1000" purchSurveySendTo="recipientEmail" purchSurveyCopyMe="copyMe" accountCodeLength="12" pinCodeLength="4" accountValidDays="365" authValidDays="30"/>
+
+    <!-- service for purchasing gift certificate configured as a Content and to be associated with products -->
+    <Content contentId="GC_PURCHASE" customMethodId="GIFT_PURCH_OFBIZ"/>
+
+    <!-- associate gift certificate purchase fulfillment services with products.  virtual products ok.  MUST be async fulfillment -
+        synchronous fulfillment can cause database lock problems -->
+    <ProductContent productId="GC-001" contentId="GC_PURCHASE" productContentTypeId="FULFILLMENT_EXTASYNC" fromDate="2000-01-01 00:00:00"/>
+
+    <!-- payment settings for gift certificates.  the idea is that you re-configure this store's GIFT_CARD settings to use the gift certificate services,
+        rather than the gift card services. -->
+    <ProductStorePaymentSetting productStoreId="ScipioShop" paymentMethodTypeId="GIFT_CARD" paymentServiceTypeEnumId="PRDS_PAY_AUTH" paymentService="ofbGcAuthorize" paymentCustomMethodId="GIFT_AUTH_OFBIZ"/>
+    <ProductStorePaymentSetting productStoreId="ScipioShop" paymentMethodTypeId="GIFT_CARD" paymentServiceTypeEnumId="PRDS_PAY_RELEASE" paymentService="ofbGcRelease" paymentCustomMethodId="GIFT_RELEASE_OFBIZ"/>
+    <ProductStorePaymentSetting productStoreId="ScipioShop" paymentMethodTypeId="GIFT_CARD" paymentServiceTypeEnumId="PRDS_PAY_CAPTURE" paymentService="ofbGcProcessor" paymentCustomMethodId="GIFT_CAPTURE_OFBIZ"/>
+    <ProductStorePaymentSetting productStoreId="ScipioShop" paymentMethodTypeId="GIFT_CARD" paymentServiceTypeEnumId="PRDS_PAY_REAUTH" paymentService="ofbGcAuthorize" paymentCustomMethodId="GIFT_AUTH_OFBIZ"/>
+    <ProductStorePaymentSetting productStoreId="ScipioShop" paymentMethodTypeId="GIFT_CARD" paymentServiceTypeEnumId="PRDS_PAY_REFUND" paymentService="ofbGcRefund" paymentCustomMethodId="GIFT_REFUND_OFBIZ"/>
+
+    <!-- DEMO: Demo gift cards for validation testing -->
+    <FinAccount finAccountId="SCIPIOSHOP_GC_001" finAccountTypeId="GIFTCERT_ACCOUNT" statusId="FNACT_ACTIVE" finAccountName="Scipio Shop Gift Card 001" finAccountCode="123412341234" finAccountPin="1234"
+        currencyUomId="USD" organizationPartyId="Company" ownerPartyId="DemoCustomer" isRefundable="Y" replenishLevel="0.00" actualBalance="500.0" availableBalance="500.0"/>
+    <FinAccount finAccountId="SCIPIOSHOP_GC_002" finAccountTypeId="GIFTCERT_ACCOUNT" statusId="FNACT_ACTIVE" finAccountName="Scipio Shop Gift Card 002" finAccountCode="432143214321" finAccountPin="4321"
+        currencyUomId="USD" organizationPartyId="Company" ownerPartyId="DemoCustomer" isRefundable="Y" replenishLevel="0.00" actualBalance="100.0" availableBalance="100.0"/>
+
+</entity-engine-xml>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<component-loader xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/component-loader.xsd">
+    <load-component component-location="base"/>
+    <load-component component-location="entity"/>
+    <load-component component-location="security"/>
+    <load-component component-location="datafile"/>
+    <load-component component-location="minilang"/>
+    <load-component component-location="common"/>
+    <load-component component-location="service"/>
+    <load-component component-location="catalina"/>
+    <load-component component-location="entityext"/>
+    <load-component component-location="webapp"/>
+    <load-component component-location="widget"/>
+    <load-component component-location="testtools"/>
+    <load-component component-location="webtools"/>
+    <load-component component-location="images"/>
+    <!-- SCIPIO: NOTE: solr currently resides in /applications
+        WARN: To avoid possible problems, if in future have both solr components in framework and applications,
+            folders should be named differently (e.g., /framework/solrcore and /applications/solr).
+    <load-component component-location="solr"/> -->
+</component-loader>

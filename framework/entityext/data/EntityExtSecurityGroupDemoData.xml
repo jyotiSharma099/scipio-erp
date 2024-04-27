@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+<entity-engine-xml>
+    <!-- Entity Sync Admin security -->
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="ENTITY_SYNC_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="ENTITY_SYNC_ADMIN"/>
+</entity-engine-xml>

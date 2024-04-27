@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+
+    <!-- create a new Budget header record -->
+    <simple-method method-name="createBudget" short-description="Create an Budget">
+          <!-- create new entity and create all the fields -->
+        <make-value entity-name="Budget" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+
+        <!-- create a non existing ID if not supplied -->
+        <sequenced-id sequence-name="Budget" field="newEntity.budgetId"/>
+
+        <!-- finally create the record (should not exist already)-->
+        <create-value value-field="newEntity"/>
+        <set field="setStatus.budgetId" from-field="newEntity.budgetId"/>
+        <set field="setStatus.statusId" value="BG_CREATED"/>
+        <call-service service-name="updateBudgetStatus" in-map-name="setStatus"/>
+        <field-to-result field="newEntity.budgetId" result-name="budgetId"/>
+    </simple-method>
+
+    <!-- update Budget Status -->
+    <simple-method method-name="updateBudgetStatus" short-description="Update Budget Status">
+        <now-timestamp field="nowDate"/>
+        <entity-and entity-name="BudgetStatus" list="budgetStatuses">
+            <field-map field-name="budgetId" from-field="parameters.budgetId"/>
+            <order-by field-name="-statusDate"/>
+        </entity-and>
+        <if-not-empty field="budgetStatuses">
+            <first-from-list list="budgetStatuses" entry="budgetStatus"/>
+            <entity-one entity-name="StatusValidChange" value-field="statusValidChange">
+                <field-map field-name="statusId" from-field="budgetStatus.statusId"/>
+                <field-map field-name="statusIdTo" from-field="parameters.statusId"/>
+            </entity-one>
+            <if-not-empty field="statusValidChange">
+                <make-value entity-name="BudgetStatus" value-field="newEntity"/>
+                <set-pk-fields map="parameters" value-field="newEntity"/>
+                <set-nonpk-fields map="parameters" value-field="newEntity"/>
+                <set field="newEntity.statusDate" from-field="nowDate"/>
+                <create-value value-field="newEntity"/>
+            </if-not-empty>
+            <else>
+                <make-value entity-name="BudgetStatus" value-field="newEntity"/>
+                <set-pk-fields map="parameters" value-field="newEntity"/>
+                <set-nonpk-fields map="parameters" value-field="newEntity"/>
+                <set field="newEntity.statusDate" from-field="nowDate"/>
+                <create-value value-field="newEntity"/>
+            </else>
+        </if-not-empty>
+    </simple-method>
+
+    <simple-method method-name="createBudgetRole" short-description="Create a Budget Role">
+        <entity-one entity-name="PartyRole" value-field="partyRole"/>
+        <if-empty field="partyRole">
+            <set field="createPartyRole.partyId" from-field="parameters.partyId"/>
+            <set field="createPartyRole.roleTypeId" from-field="parameters.roleTypeId"/>
+            <call-service service-name="createPartyRole" in-map-name="createPartyRole"/>
+            <check-errors/>
+        </if-empty>
+        <make-value entity-name="BudgetRole" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+        <create-value value-field="newEntity"/>
+    </simple-method>
+
+</simple-methods>
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<ofbiz-containers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/ofbiz-containers.xsd">
+
+    <!-- load the ofbiz component container (always first) -->
+    <container name="component-container" loaders="main,rmi,pos,load-data" class="org.ofbiz.base.container.ComponentContainer"/>
+
+    <container name="component-container-test" loaders="test" class="org.ofbiz.base.container.ComponentContainer">
+        <property name="ofbiz.instrumenterClassName" value="org.ofbiz.base.config.CoberturaInstrumenter"/>
+        <property name="ofbiz.instrumenterFile" value="runtime/logs/cobertura-components.dat"/>
+    </container>
+
+    <container name="component-container-limited" loaders="limited" class="org.ofbiz.base.container.ComponentContainer">
+        <property name="update-classpath" value="false"/>
+    </container>
+
+    <container name="component-container" loaders="testlist" class="org.ofbiz.base.container.JustLoadComponentsContainer"/>
+
+</ofbiz-containers>

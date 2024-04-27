@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<fieldtypemodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/fieldtypemodel.xsd">
+  <!-- ===================== field-type-def ==================== -->
+   <!-- General Types -->
+    <field-type-def type="blob" sql-type="LONG BYTE" sql-type-alias="LONG BYTE" java-type="java.sql.Blob"/>
+    <field-type-def type="byte-array" sql-type="LONG BYTE" sql-type-alias="LONG BYTE" java-type="byte[]"/>
+    <field-type-def type="object" sql-type="LONG BYTE" sql-type-alias="LONG BYTE" java-type="Object"/>
+
+    <field-type-def type="date-time" sql-type="TIMESTAMP" java-type="java.sql.Timestamp"/>
+    <field-type-def type="date" sql-type="DATE" java-type="java.sql.Date"/>
+    <field-type-def type="time" sql-type="TIME" java-type="java.sql.Time"/>
+
+    <field-type-def type="currency-amount" sql-type="FIXED(18,2)" java-type="java.math.BigDecimal"/>
+    <field-type-def type="currency-precise" sql-type="FIXED(18,3)" java-type="java.math.BigDecimal"/>
+    <field-type-def type="fixed-point" sql-type="FIXED(18,6)" java-type="java.math.BigDecimal"/>
+    <field-type-def type="floating-point" sql-type="FIXED(18,6)" java-type="Double"/>
+    <field-type-def type="numeric" sql-type="FIXED(20,0)" java-type="Long"/>
+
+    <field-type-def type="id" sql-type="VARCHAR(255) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="id-long" sql-type="VARCHAR(255) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="id-vlong" sql-type="VARCHAR(255) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+
+    <field-type-def type="indicator" sql-type="CHAR(1) UNICODE" sql-type-alias="CHAR() UNICODE" java-type="String"/>
+    <field-type-def type="very-short" sql-type="VARCHAR(10) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="short-varchar" sql-type="VARCHAR(60) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="long-varchar" sql-type="VARCHAR(255) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="very-long" sql-type="LONG UNICODE" sql-type-alias="LONG UNICODE" java-type="String"/>
+
+    <field-type-def type="comment" sql-type="VARCHAR(255) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="description" sql-type="VARCHAR(255) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="name" sql-type="VARCHAR(255) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="value" sql-type="VARCHAR(255) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+
+   <!-- Specialized Types -->
+    <field-type-def type="credit-card-number" sql-type="VARCHAR(255) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="credit-card-date" sql-type="VARCHAR(7) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="email" sql-type="VARCHAR(320) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="url" sql-type="VARCHAR(2000) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="id-ne" sql-type="VARCHAR(255) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="id-long-ne" sql-type="VARCHAR(255) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="id-vlong-ne" sql-type="VARCHAR(255) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+    <field-type-def type="tel-number" sql-type="VARCHAR(60) UNICODE" sql-type-alias="VARCHAR() UNICODE" java-type="String"/>
+
+    <!-- SCIPIO: 3.0.0: JSON-specific types, for GenericEntity integration (based on "very-long") -->
+    <field-type-def type="json" sql-type="LONG UNICODE" java-type="String"/>
+    <field-type-def type="json-array" sql-type="LONG UNICODE" java-type="String"/>
+    <field-type-def type="json-object" sql-type="LONG UNICODE" java-type="String"/>
+</fieldtypemodel>

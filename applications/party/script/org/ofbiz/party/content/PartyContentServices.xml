@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+
+    <simple-method method-name="createPartyContent" short-description="Create Party Content Entity">
+        <make-value entity-name="PartyContent" value-field="partyContent"/>
+        <set-pk-fields map="parameters" value-field="partyContent"/>
+        <set-nonpk-fields map="parameters" value-field="partyContent"/>
+
+        <if-empty field="partyContent.fromDate">
+            <now-timestamp field="nowTimestamp"/>
+            <set field="partyContent.fromDate" from-field="nowTimestamp"/>
+        </if-empty>
+
+        <create-value value-field="partyContent"/>
+    </simple-method>
+
+    <simple-method method-name="updatePartyContent" short-description="Update Party Content Entity">
+        <make-value entity-name="PartyContent" value-field="lookupPkMap"/>
+        <set-pk-fields map="parameters" value-field="lookupPkMap"/>
+
+        <find-by-primary-key map="lookupPkMap" value-field="partyContent"/>
+        <set-nonpk-fields map="parameters" value-field="partyContent"/>
+        <store-value value-field="partyContent"/>
+    </simple-method>
+
+    <simple-method method-name="removePartyContent" short-description="Update Party Content Entity">
+        <make-value entity-name="PartyContent" value-field="lookupPkMap"/>
+        <set-pk-fields map="parameters" value-field="lookupPkMap"/>
+
+        <find-by-primary-key map="lookupPkMap" value-field="partyContent"/>
+        <remove-value value-field="partyContent"/>
+    </simple-method>
+
+</simple-methods>

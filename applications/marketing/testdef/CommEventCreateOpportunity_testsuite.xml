@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<testcase>
+    <open value="/partymgr/control/logout" />
+    <open value="/partymgr/control/setSessionLocale?newLocale=en" />
+    <waitForPageToLoad value="30000" />
+    <type name="USERNAME" value="admin" />
+    <type name="PASSWORD" value="ofbiz" />
+    <click locator="//input[@value='Login']" />
+    <waitForPageToLoad value="50000" />
+    <getBodyText out="bodyText"/>
+    <getHtmlSource out="htmlSource"/>
+    <click locator="link=Communications" />
+    <waitForPageToLoad value="50000" />
+    <click locator="link=New Communication" />
+    <waitForPageToLoad value="50000" />
+    <select locator="EditCommEvent_communicationEventTypeId" option="label=Email" />
+    <select locator="EditCommEvent_statusId" option="label=Entered" />
+    <type name="partyIdFrom" value="DemoCustomer" />
+    <type name="partyIdTo" value="admin" />
+    <select locator="EditCommEvent_contactMechTypeId" option="label=Internal Note via partyId" />
+    <type name="EditCommEvent_subject" value="Test send Internal note" />
+    <type name="EditCommEvent_content" value="Send from democustomer to admin " />
+    <click locator="submitButton" />
+    <waitForPageToLoad value="50000" />
+    <click locator="link=Create Opportunity" />
+    <waitForPageToLoad value="50000" />
+    <click locator="//input[@name='submitButton' and @value='Save']" />
+    <waitForPageToLoad value="50000" />
+    <click locator="link=Communications" />
+    <waitForPageToLoad value="50000" />
+    <captureEntirePageScreenshot value="CommEventCreateOpportunity"/>
+    <closeBrowser/>
+</testcase>

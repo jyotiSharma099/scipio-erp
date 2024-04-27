@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<!-- www.advantagedatabase.com -->
+
+<fieldtypemodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/fieldtypemodel.xsd">
+
+    <!-- ===================== field-type-def ==================== -->
+    <!-- General Types -->
+    <field-type-def type="blob" sql-type="Blob" java-type="java.sql.Blob"/>
+    <field-type-def type="byte-array" sql-type="Blob" java-type="byte[]"/>
+    <field-type-def type="object" sql-type="Blob" java-type="Object"/>
+
+    <field-type-def type="date-time" sql-type="TimeStamp" java-type="java.sql.Timestamp"/>
+    <field-type-def type="date" sql-type="Date" java-type="java.sql.Date"/>
+    <field-type-def type="time" sql-type="Time" java-type="java.sql.Time"/>
+
+    <!-- Advantage numeric fields are 2 bytes longer than the intended precision - to hold the sign and decimal point. -->
+    <field-type-def type="currency-amount" sql-type="Numeric(20,2)" java-type="java.math.BigDecimal"/>
+    <field-type-def type="currency-precise" sql-type="Numeric(20,3)" java-type="java.math.BigDecimal"/>
+    <field-type-def type="fixed-point" sql-type="Numeric(20,6)" java-type="java.math.BigDecimal"/>
+    <field-type-def type="floating-point" sql-type="Double" java-type="Double"/>
+    <field-type-def type="numeric" sql-type="Numeric(20,0)" java-type="Long"/>
+
+    <field-type-def type="id" sql-type="Char(255)" java-type="String"/>
+    <field-type-def type="id-long" sql-type="Char(255)" java-type="String"/>
+    <field-type-def type="id-vlong" sql-type="Char(255)" java-type="String"/>
+
+    <field-type-def type="indicator" sql-type="Char(1)" java-type="String"/>
+    <field-type-def type="very-short" sql-type="Char(10)" java-type="String"/>
+    <field-type-def type="short-varchar" sql-type="Char(60)" java-type="String"/>
+    <field-type-def type="long-varchar" sql-type="Char(255)" java-type="String"/>
+    <field-type-def type="very-long" sql-type="Memo" java-type="String"/>
+
+    <field-type-def type="comment" sql-type="Char(255)" java-type="String"/>
+    <field-type-def type="description" sql-type="Char(255)" java-type="String"/>
+    <field-type-def type="name" sql-type="Char(255)" java-type="String"/>
+    <field-type-def type="value" sql-type="Char(255)" java-type="String"/>
+
+    <!-- Specialized Types -->
+    <field-type-def type="credit-card-number" sql-type="Char(255)" java-type="String"/>
+    <field-type-def type="credit-card-date" sql-type="Char(7)" java-type="String"/>
+    <field-type-def type="email" sql-type="Char(320)" java-type="String"/>
+    <field-type-def type="url" sql-type="Char(2000)" java-type="String"/>
+    <field-type-def type="id-ne" sql-type="Char(255)" java-type="String"/>
+    <field-type-def type="id-long-ne" sql-type="Char(255)" java-type="String"/>
+    <field-type-def type="id-vlong-ne" sql-type="Char(255)" java-type="String"/>
+    <field-type-def type="tel-number" sql-type="Char(60)" java-type="String"/>
+
+    <!-- SCIPIO: 3.0.0: JSON-specific types, for GenericEntity integration (based on "very-long") -->
+    <field-type-def type="json" sql-type="Memo" java-type="String"/>
+    <field-type-def type="json-array" sql-type="Memo" java-type="String"/>
+    <field-type-def type="json-object" sql-type="Memo" java-type="String"/>
+</fieldtypemodel>

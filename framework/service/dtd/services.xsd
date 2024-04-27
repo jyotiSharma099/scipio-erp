@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <!--
+        DEV NOTE: TODO: REVIEW: The following include has been expanded below.
+        Changes made here may need to be duplicated there (but not necessarily).
+        This allows for more reliable IDE integration, simplified XML parsing for libraries, and support for per-file modifications.
+    -->
+    <!--<xs:include schemaLocation="http://ofbiz.apache.org/dtds/service-group.xsd"/>-->
+    <!-- ================== service-group.xsd ==================== -->
+    <xs:element name="service-group">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="group"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="group">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="invoke"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.group"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.group">
+        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute name="send-mode" default="all">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="all"/>
+                    <xs:enumeration value="first-available"/>
+                    <xs:enumeration value="random"/>
+                    <xs:enumeration value="round-robin"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="invoke">
+        <xs:complexType>
+            <xs:attributeGroup ref="attlist.invoke"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.invoke">
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute name="mode" default="sync">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="sync"/>
+                    <xs:enumeration value="async"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="parameters" default="preserve">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="optional"/>
+                    <xs:enumeration value="preserve"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="result-to-context" type="xs:boolean" default="false"/>
+    </xs:attributeGroup>
+    <!-- ================== END service-group.xsd ==================== -->
+    <!-- ================== SERVICES ==================== -->
+    <xs:element name="services">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="description"/>
+                <xs:element minOccurs="0" ref="vendor"/>
+                <xs:element minOccurs="0" ref="version"/>
+                <xs:element minOccurs="0" ref="created"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="service"/><!-- SCIPIO: minOccurs="0" -->
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="description" type="xs:string"/>
+    <xs:element name="vendor" type="xs:string"/>
+    <xs:element name="version" type="xs:string"/>
+    <xs:element name="created" type="xs:string"/>
+    <xs:element name="namespace">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:string">
+                    <xs:attribute name="prefix" type="xs:string" use="required"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="service">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="description"/>
+                <xs:element minOccurs="0" ref="namespace"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="deprecated"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="permission-service"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="required-permissions"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="implements"/>
+                <xs:element minOccurs="0" ref="metric"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="property">
+                    <xs:annotation>
+                        <xs:documentation>
+                            SCIPIO: Defines a custom property for the service.
+                            Can be used to indicate to system or custom/client code some feature or behavior of the service.
+                            Automatically inherited from "implements" service interfaces.
+                            If value is empty, sets null and overrides any inherited values with null.
+                            Added 2018-11-23.
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element minOccurs="0" ref="description"/>
+                        </xs:sequence>
+                        <xs:attribute name="name" type="xs:string" use="required"/>
+                        <xs:attribute name="type" type="xs:string"/>
+                        <xs:attribute name="value" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:choice maxOccurs="1" minOccurs="0">
+                    <xs:choice minOccurs="0" maxOccurs="unbounded">
+                        <xs:element ref="auto-attributes"/>
+                        <xs:element ref="attribute"/>
+                    </xs:choice>
+                    <xs:element ref="group"/>
+                </xs:choice>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="override"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.service"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.service">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="engine" type="xs:string" use="required"/>
+        <xs:attribute name="location" type="xs:string"/>
+        <xs:attribute name="invoke" type="xs:string"/>
+        <xs:attribute name="auth" type="xs:boolean" default="false"/>
+        <xs:attribute name="export" type="xs:boolean" default="false"/>
+        <xs:attribute name="validate" type="xs:boolean" default="true"/>
+        <xs:attribute name="default-entity-name" type="xs:string"/>
+        <xs:attribute name="use-transaction" type="xs:boolean" default="true">
+            <xs:annotation>
+                <xs:documentation>
+                    If set to true and there is no transaction already in place the Service Engine will begin one.
+                    If set to false or there is a transaction already in place the Service Engine will do nothing (this also means that if set to false and a transaction is already in place it will do nothing).
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="require-new-transaction" type="xs:boolean"
+                      default="false">
+            <xs:annotation>
+                <xs:documentation>
+                    If set to true and there is a transaction already in place the Service Engine will suspend that transaction, begin a new one just for this service, commit or rollback the local transaction when the service is complete, and will resume the original transaction.
+                    If set to true and there is no transaction already in place it will just begin a transaction and manage it as would be done for a normal user-transaction=true.
+                    If use-transaction=false this setting is ignored.
+                    Beware: using require-new-transaction=true in a service called (maybe not directly) by a pre-invoke or earlier event ( preprocessor, firstvisit and so on) is not yet supported.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="hideResultInLog" type="xs:boolean" default="false">
+            <xs:annotation>
+                <xs:documentation>
+                    If set to true the result will be hidden from possible exposition in LocalDispatcher.runSync()
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>        
+        <xs:attribute name="transaction-timeout" type="xs:int" default="0">
+            <xs:annotation>
+                <xs:documentation>
+                    Defines the timeout for the transaction, in seconds.
+                    Defaults to the value set in the TransactionFactory being used (typically 60 seconds).
+                    This value is only used if this service begins a transaction (either require-new-transaction=true, or use-transaction=true and there is no other transaction already in place).
+                    If use-transaction=false this setting is ignored.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="max-retry" type="xs:int" default="-1"/>
+        <xs:attribute name="debug" type="xs:boolean" default="false"/>
+        <xs:attribute name="semaphore" default="none">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="fail"/>
+                    <xs:enumeration value="wait"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="semaphore-wait-seconds" type="xs:int" default="300"/>
+        <xs:attribute name="semaphore-sleep" type="xs:int" default="500"/>
+        <xs:attribute name="log"><!-- default="normal" -->
+            <xs:annotation>
+                <xs:documentation>
+                    If set to quiet, the service engine will avoid making info-/timing-level logs
+                    about this service; if set to debug, will provide extra info (same as debug=true attribute).
+                    May be needed for small or low-level services that get called constantly and burden the log.
+                    NOTE: If log is configured as verbose, "quiet" may not be respected.
+                    SCIPIO: 2.x.x: Added attribute.
+                </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="debug"/>
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="quiet"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="log-eca"><!-- default="normal" -->
+            <xs:annotation>
+                <xs:documentation>
+                    If set to quiet, the service engine will avoid making info-/timing-level logs
+                    about this service when called from ECAs, by default (may be overridden elsewhere);
+                    if set to debug, will provide extra info (same as debug=true attribute).
+                    May be needed for small or low-level services that get called constantly and burden the log.
+                    NOTE: If log is configured as verbose, "quiet" may not be respected.
+                    SCIPIO: 2.x.x: Added attribute.
+                </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="debug"/>
+                    <xs:enumeration value="normal"/>
+                    <xs:enumeration value="quiet"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="log-trace-exclude-dispatcher-regex" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>
+                    If set as a regular expression, the trace log message in particular
+                    "Sync service [" + localName + "/" + modelService.name + "] finished in [" + timeToRun + "] milliseconds"
+                    is filtered out based on the localName which is the dispatcher name (JMSDispatcher, entity-default, default, etc.).
+                    This uses Matcher.matches() meaning ^ and $ are not necessary.
+                    ex:
+                        log-trace-exclude-dispatcher-regex="JMSDispatcher"
+                        log-trace-exclude-dispatcher-regex="entity-.*"
+                        log-trace-exclude-dispatcher-regex=".*"
+                    SCIPIO: 2.1.0: Added attribute.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="priority"><!-- default="50" -->
+            <xs:annotation>
+                <xs:documentation>
+                    Default job priority when this service is run either async (ECA) or scheduled as a job. Default: 50 (normal)
+                    NOTE: This currently has no effect on services invoked in "sync" mode.
+                    SCIPIO: 2.1.0: Added attribute.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="job-pool-persist">
+            <xs:annotation>
+                <xs:documentation>
+                    Default job pool when service scheduled as persistent job, when not overridden by caller.
+                    NOTE: This occurs during job scheduling; changing this has no effect for a JobSandbox record already scheduled.
+                    SCIPIO: 2.1.0: Added attribute.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="start-delay"><!-- default="0" -->
+            <xs:annotation>
+                <xs:documentation>
+                    Fixed service start delay in milliseconds (ms). Default: 0 (none)
+                    NOTE: This currently has no effect on services invoked in "sync" mode.
+                    SCIPIO: 2.1.0: Added attribute.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessor-location" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>
+                    Location of a class containing an accessor/factory method pointed to by accessor-invoke;
+                    defaults to "location" thus same class as service class.
+                    SCIPIO: 2.1.0: Added.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessor-invoke" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>
+                    Name of a method that works as an accessor/factory method and returns an instance of the
+                    service class pointed to by "location".
+                    SCIPIO: 2.1.0: Added.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="notification">
+        <xs:complexType>
+            <xs:attributeGroup ref="attlist.notification"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.notification">
+        <xs:attribute name="event" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="success"/>
+                    <xs:enumeration value="error"/>
+                    <xs:enumeration value="fail"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="group" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+    <xs:element name="permission-service">
+        <xs:complexType>
+            <xs:attributeGroup ref="attlist.permission-service"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.permission-service">
+        <xs:attribute name="service-name" type="xs:string" use="required"/>
+        <xs:attribute name="resource-description" type="xs:string" use="optional">
+            <xs:annotation><xs:documentation>This will be used in error messages, et cetera. If not specified will default to a service name.</xs:documentation></xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="main-action" use="optional">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="ADMIN"/><!-- SCIPIO: 2018-05-24: allow direct test for ADMIN -->
+                    <xs:enumeration value="CREATE"/>
+                    <xs:enumeration value="UPDATE"/>
+                    <xs:enumeration value="DELETE"/>
+                    <xs:enumeration value="VIEW"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="required-permissions">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="check-permission"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="check-role-member"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="permission-service"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.required-permissions"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.required-permissions">
+        <xs:attribute name="join-type" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="AND"/>
+                    <xs:enumeration value="OR"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="check-permission">
+        <xs:complexType>
+            <xs:attributeGroup ref="attlist.check-permission"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.check-permission">
+        <xs:attribute name="permission" type="xs:string" use="required"/>
+        <xs:attribute name="action" type="xs:string"/>
+    </xs:attributeGroup>
+    <xs:element name="check-role-member">
+        <xs:annotation>
+            <xs:documentation>
+                    This is deprecated [WARN: NON-WORKING]
+                    SCIPIO: This is not only deprecated, it simply does not work properly.
+                    May be removed or rewritten in the future...
+            </xs:documentation>
+        </xs:annotation>   
+        <xs:complexType>
+            <xs:attributeGroup ref="attlist.check-role-member"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.check-role-member">
+        <xs:attribute name="role-type" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+    <xs:element name="service-security">
+        <xs:complexType>
+            <xs:attributeGroup ref="attlist.service-security"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.service-security">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="class" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+    <xs:element name="implements">
+        <xs:complexType>
+            <xs:attributeGroup ref="attlist.implements"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.implements">
+        <xs:attribute name="service" type="xs:string" use="required"/>
+        <xs:attribute name="optional" type="xs:boolean" default="false">
+            <xs:annotation><xs:documentation>If set to true all attributes inherited will have be optional whether or not they were in the implemented service definition.</xs:documentation></xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="metric">
+        <xs:annotation>
+            <xs:documentation>
+                Calculate and maintain an average response time for this service. Service metrics can be used
+                for monitoring and reporting.
+                
+                The metric works by gathering statistics until a configurable maximum is reached (number of
+                requests or elapsed time), then the average is calculated. A smoothing factor is used to
+                smooth differences between calculations.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="name" type="xs:string" use="required">
+                <xs:annotation>
+                    <xs:documentation>
+                        Each metric must have a unique name. 
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="estimation-size" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                        Positive integer number of requests to include in the metrics calculation. Defaults to "100". 
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="estimation-time" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                        Positive integer number of milliseconds to include in the metrics calculation. Defaults to "1000". 
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="smoothing" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>
+                        Positive decimal smoothing factor - used to smooth the differences between calculations. A value of "1" disables smoothing. Defaults to "0.7". 
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="auto-attributes">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="exclude"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.auto-attributes"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.auto-attributes">
+        <xs:attribute name="entity-name" type="xs:string"/>
+        <xs:attribute name="include" default="all">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="pk"/>
+                    <xs:enumeration value="nonpk"/>
+                    <xs:enumeration value="all"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="mode" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="IN"/>
+                    <xs:enumeration value="OUT"/>
+                    <xs:enumeration value="INOUT"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="optional" type="xs:boolean" default="false"/>
+        <xs:attribute name="form-display" type="xs:boolean" default="true"/>
+        <xs:attribute name="allow-html" use="optional" default="none">
+            <xs:annotation>
+                <xs:documentation>
+                    Applies only to String fields.
+                    Only checked for incoming parameters/attributes (could change in the future, but this is meant for validating input from users, other systems, etc).
+                    Defaults to "none" meaning no HTML is allowed (will result in an error message).
+                    If some HTML is desired then use "any".
+                    There was previously "safe" but it's deprecated
+                </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="any"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="type-convert" type="xs:boolean">
+            <xs:annotation><xs:documentation>
+                If set to true, if the attribute in context is of different type, it is automatically
+                converted to this attribute's type, otherwise a validation error occurs. Default: false
+
+                SCIPIO: 2019-01-04: Added.
+            </xs:documentation></xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="prefix" type="xs:string">
+            <xs:annotation><xs:documentation>
+                Field name prefix.
+
+                SCIPIO: 3.0.0: Added.
+            </xs:documentation></xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="exclude">
+        <xs:complexType>
+            <xs:attributeGroup ref="attlist.exclude"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.exclude">
+        <xs:attribute name="field-name" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+    <xs:element name="attribute">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="type-validate"/>
+                <xs:element minOccurs="0" ref="description" />
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.attribute"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.attribute">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="type" type="xs:string" use="required"/>
+        <xs:attribute name="mode" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="IN"/>
+                    <xs:enumeration value="OUT"/>
+                    <xs:enumeration value="INOUT"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="optional" type="xs:boolean" default="false"/>
+        <xs:attribute name="default-value" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The value specified will be used for the attribute if no value is passed in. 
+                    This will only happen if it is okay to not pass a value in, so if this is set then optional will be set to true. 
+                    If optional=false and this is set then the value will be overridden and with a value in default-value is will set 
+                    optional=true anyway.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="form-label" type="xs:string"/>
+        <xs:attribute name="entity-name" type="xs:string"/>
+        <xs:attribute name="field-name" type="xs:string"/>
+        <xs:attribute name="request-attribute-name" type="xs:string"/>
+        <xs:attribute name="session-attribute-name" type="xs:string"/>
+        <xs:attribute name="string-map-prefix" type="xs:string"/>
+        <xs:attribute name="string-list-suffix" type="xs:string"/>
+        <xs:attribute name="form-display" type="xs:boolean" default="true"/>
+        <xs:attribute name="allow-html" use="optional" default="none">
+            <xs:annotation><xs:documentation>
+                Applies only to String fields.
+                Only checked for incoming parameters/attributes (could change in the future, but this is meant for validating input from users, other systems, etc).
+                Defaults to "none" meaning no HTML is allowed (will result in an error message).
+                If some HTML is desired then use "any".
+                There was previously "safe" but it's deprecated
+            </xs:documentation></xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="any"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="type-convert" type="xs:boolean">
+            <xs:annotation><xs:documentation>
+                SCIPIO: If set to true, if the attribute in context is of different type, it is automatically
+                converted to this attribute's type, otherwise a validation error occurs. Default: false
+                Added 2019-01-04.
+            </xs:documentation></xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="access"><!-- default="public" -->
+            <xs:annotation>
+                <xs:documentation>Visibility of the attribute toward public-facing services (SCIPIO).
+                    Default: "public". When set to "internal", the attribute cannot be assigned from request parameters from direct controller event calls.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="public"/>
+                    <xs:enumeration value="internal"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="event-access"><!-- default="public" -->
+            <xs:annotation>
+                <xs:documentation>Visibility of the attribute toward public-facing services specifically from controller events (SCIPIO).
+                    Default: "public". When set to "internal", the attribute cannot be assigned from request parameters from direct controller event calls.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="public"/>
+                    <xs:enumeration value="internal"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="deprecated">
+        <xs:complexType mixed="true">
+            <xs:attributeGroup ref="attlist.deprecated"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.deprecated">
+        <xs:attribute name="use-instead" type="xs:string" use="required">
+            <xs:annotation><xs:documentation>Precise the service who replace now the current</xs:documentation></xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="since" type="xs:string" use="optional">
+            <xs:annotation><xs:documentation>Precise the ofbiz release when this service has been set to deprecated</xs:documentation></xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="override">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="type-validate"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.override"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.override">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="type" type="xs:string"/>
+        <xs:attribute name="entity-name" type="xs:string"/>
+        <xs:attribute name="field-name" type="xs:string"/>
+        <xs:attribute name="mode">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="IN"/>
+                    <xs:enumeration value="OUT"/>
+                    <xs:enumeration value="INOUT"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="optional" type="xs:boolean"/>
+        <xs:attribute name="default-value" type="xs:string"/>
+        <xs:attribute name="form-label" type="xs:string"/>
+        <xs:attribute name="form-display" type="xs:boolean"/>
+        <xs:attribute name="allow-html" use="optional">
+            <xs:annotation>
+                <xs:documentation>
+                    Applies only to String fields.
+                    Only checked for incoming parameters/attributes (could change in the future, but this is meant for validating input from users, other systems, etc).
+                    There is no default, "none" means no HTML is allowed (will result in an error message).
+                    If some HTML is desired then use "any".
+                    There was previously "safe" but it's deprecated
+                </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="any"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="type-convert" type="xs:boolean">
+            <xs:annotation><xs:documentation>
+                SCIPIO: If set to true, if the attribute in context is of different type, it is automatically
+                converted to this attribute's type, otherwise a validation error occurs. Default: false
+                Added 2019-01-04.
+            </xs:documentation></xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="type-validate">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element ref="fail-message"/>
+                <xs:element ref="fail-property"/>
+            </xs:choice>
+            <xs:attributeGroup ref="attlist.type-validate"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.type-validate">
+        <xs:attribute name="method" type="xs:string"/>
+        <xs:attribute name="class" type="xs:string" default="org.ofbiz.base.util.UtilValidate"/>
+    </xs:attributeGroup>
+    <xs:element name="fail-message">
+        <xs:complexType>
+            <xs:attributeGroup ref="attlist.fail-message"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.fail-message">
+        <xs:attribute name="message" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+    <xs:element name="fail-property">
+        <xs:complexType>
+            <xs:attributeGroup ref="attlist.fail-property"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.fail-property">
+        <xs:attribute name="resource" type="xs:string" use="required"/>
+        <xs:attribute name="property" type="xs:string" use="required"/>
+    </xs:attributeGroup>
+</xs:schema>

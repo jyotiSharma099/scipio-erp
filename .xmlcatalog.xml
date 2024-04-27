@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- 
+    XML Catalog for IDEs
+    
+    For IntelliJ IDEA, use xmlcatalog.properties instead
+-->
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <nextCatalog catalog="framework/base/dtd/base-catalog.xml"/>
+  <nextCatalog catalog="framework/datafile/dtd/datafiles-catalog.xml"/>
+  <nextCatalog catalog="framework/entity/dtd/entity-catalog.xml"/>
+  <nextCatalog catalog="framework/minilang/dtd/minilang-catalog.xml"/>
+  <nextCatalog catalog="framework/service/dtd/service-catalog.xml"/>
+  <nextCatalog catalog="framework/testtools/dtd/testtools-catalog.xml"/>
+  <nextCatalog catalog="framework/webapp/dtd/webapp-catalog.xml"/>
+  <nextCatalog catalog="framework/widget/dtd/widget-catalog.xml"/>
+</catalog>

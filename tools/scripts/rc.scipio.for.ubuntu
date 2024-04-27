@@ -1,0 +1,112 @@
+#!/bin/sh 
+#####################################################################
+# This file is subject to the terms and conditions defined in the\n
+# files 'LICENSE' and 'NOTICE', which are part of this source\n
+# code package.
+#####################################################################
+#
+# scipio        This shell script takes care of starting and stopping
+#              the Scipio ERP subsystem. This version is for Ubuntu systems
+#
+# chkconfig: - 80 10
+# description: Scipio ERP
+
+# the userlogin the script should run under and is the home dirname, in this case /home/scipio/scipio
+SCIPIOUSER="scipio"
+SCIPIODIR="scipio"
+
+#============== no need to change anything below this line =======================
+
+# Start OFBiz
+start() {
+    if [ "$USER" = "" ]; then
+        echo "Mounting data disk at boottime here"
+#        mount /dev/sdg /data
+    fi
+    running
+    if [ "$SCIPIO_PROCS" = "" ]; then
+        echo "Scipio ERP is already running..."
+        return 0
+    fi
+    if [ "$USER" = "$SCIPIOUSER" ]; then
+        echo "starting standard /home/$SCIPIOUSER/$SCIPIODIR/start.sh"
+        cd /home/$SCIPIOUSER/$SCIPIODIR
+        ./start.sh
+        if [ $? = 0 ]; then 
+            echo "start success"
+        else
+            echo "starting Scipio ERP user: $SCIPIOUSER in dir: $SCIPIODIR failed return code: $?"
+        fi
+        return 0
+    fi
+}
+
+stop() {
+    if [ "$USER" = "$SCIPIOUSER" ]; then
+        echo "stopping standard /home/$SCIPIOUSER/$SCIPIODIR/stop.sh"
+        cd /home/$SCIPIOUSER/$SCIPIODIR
+	    MAXCOUNT=10
+        COUNTER=0
+        until [ $COUNTER -gt $MAXCOUNT ]; do
+             COUNTER=$((COUNTER+1))
+             echo "Attempt number: $COUNTER"
+
+            ./stop.sh
+            if [ $? = 1 ]; then
+                echo "stop success" 
+                return 0
+            fi
+            sleep 3
+        done
+        echo "stopping Scipio ERP from user: $SCIPIOUSER failed after $MAXCOUNT attemps"
+        return 1
+    fi
+}
+
+#check for user, if wrong try to change to 'SCIPIOUSER' and re-execute.
+checkUser() {
+    if [ "$USER" != "$SCIPIOUSER" ]; then
+        if [ "$USER" = "" ]; then
+            exec su - $SCIPIOUSER -c "$0 $1 "
+	    else
+	        exec sudo -u $SCIPIOUSER $0 $1 
+	    fi
+        exit $?
+    fi
+}
+
+# Scipio ERP processes running
+running() {
+    SCIPIO_PROCS=`/bin/ps h -o pid,args -C java -u $SCIPIOUSER | /bin/grep -e "-jar ofbiz.jar" | /bin/egrep -o "^[[:space:]]*[[:digit:]]*"`
+}
+
+#========= main program ===============
+checkUser $1
+case "$1" in
+    "start")
+        start
+    ;;
+    "stop")
+        stop
+    ;;
+    "restart")
+        stop
+        start
+    ;;
+    "status")
+        running
+        if [ "$SCIPIO_PROCS" = "" ]; then
+            echo "Scipio ERP for user: $SCIPIOUSER in dir: $SCIPIODIR is stopped"
+            exit 1
+        else
+            echo "Scipio ERP for user: $SCIPIOUSER in dir: $SCIPIODIR is running"
+            exit 0
+        fi
+    ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status|help} not: $1"
+        exit 1
+    ;;
+esac
+exit $?
+

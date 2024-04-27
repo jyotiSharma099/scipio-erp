@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<component-loader xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/component-loader.xsd">
+    <load-component component-location="party"/>
+    <load-component component-location="securityext"/>
+    <load-component component-location="content"/>
+    <load-component component-location="workeffort"/>
+    <load-component component-location="product"/>
+    <load-component component-location="manufacturing"/>
+    <load-component component-location="accounting"/>
+    <load-component component-location="humanres"/>
+    <load-component component-location="order"/>
+    <load-component component-location="marketing"/>
+    
+    <!-- SCIPIO components -->
+    <load-component component-location="cms"/>
+    <load-component component-location="shop"/>
+    
+    <!-- common component used by most other components last because it uses info from most components-->
+    <load-component component-location="commonext"/>
+    <load-component component-location="setup"/><!-- SCIPIO: new setup component; depends on common-ext -->
+    
+    <!-- SCIPIO common components -->
+    <load-component component-location="solr"/>
+</component-loader>

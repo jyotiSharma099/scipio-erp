@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<entity-engine-xml>
+
+    <!-- Facility Manager security -->
+    <SecurityPermission description="View operations in the Facility Manager." permissionId="FACILITY_VIEW"/>
+    <SecurityPermission description="Create operations in the Facility Manager." permissionId="FACILITY_CREATE"/>
+    <SecurityPermission description="Update operations in the Facility Manager." permissionId="FACILITY_UPDATE"/>
+    <SecurityPermission description="Delete operations in the Facility Manager." permissionId="FACILITY_DELETE"/>
+    <SecurityPermission description="ALL operations in the Facility Manager." permissionId="FACILITY_ADMIN"/>
+    <SecurityPermission description="Limited view operations in the Facility Manager." permissionId="FACILITY_ROLE_VIEW"/>
+    <SecurityPermission description="Limited update operations in the Facility Manager." permissionId="FACILITY_ROLE_UPDATE"/>
+    
+    <!-- add admin to SUPER permission group -->
+    <SecurityGroupPermission groupId="SUPER" permissionId="FACILITY_ADMIN"/>
+
+</entity-engine-xml>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+    <simple-method method-name="lookupParty" short-description="Lookup a party">
+        <if-not-empty field="parameters.firstName">
+            <set from-field="parameters.firstName" field="LookupMap.firstName"/>
+        </if-not-empty>
+        <if-not-empty field="parameters.lastName">
+            <set from-field="parameters.lastName" field="LookupMap.lastName"/>
+        </if-not-empty>
+        <find-by-and entity-name="Person" map="LookupMap" list="parties"/>
+        <iterate list="parties" entry="party">
+            <set from-field="party.firstName" field="resultEntry.label"/>
+            <set from-field="party.partyId" field="resultEntry.value"/>
+            <field-to-list field="resultEntry" list="lookupResult"/>
+        </iterate>
+        <if-empty field="parties">
+            <set value="No match" field="resultEntry.label"/>
+            <set value="" field="resultEntry.value" set-if-null="true"/><!-- SCIPIO: 2018-11-02: set-if-null="true" required to set null -->
+            <field-to-list field="resultEntry" list="lookupResult"/>
+        </if-empty>
+        <field-to-result field="lookupResult"/>
+    </simple-method>
+</simple-methods>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<entity-engine-xml>
+    <!-- Marketing Manager security -->
+    <SecurityPermission description="View operations in the Marketing Manager." permissionId="MARKETING_VIEW"/>
+    <SecurityPermission description="Create operations in the Marketing Manager." permissionId="MARKETING_CREATE"/>
+    <SecurityPermission description="Update operations in the Marketing Manager." permissionId="MARKETING_UPDATE"/>
+    <SecurityPermission description="Delete operations in the Marketing Manager." permissionId="MARKETING_DELETE"/>
+    <SecurityPermission description="ALL operations in the Marketing Manager." permissionId="MARKETING_ADMIN"/>
+    <SecurityPermission description="Limited view operations in the Marketing Manager." permissionId="MARKETING_ROLE_VIEW"/>
+    <SecurityPermission description="Limited update operations in the Marketing Manager." permissionId="MARKETING_ROLE_UPDATE"/>
+
+    <!-- SFA security -->
+    <SecurityPermission description="View operations in the CRM." permissionId="SFA_VIEW"/>
+    <SecurityPermission description="Create operations in the CRM." permissionId="SFA_CREATE"/>
+    <SecurityPermission description="Update operations in the CRM." permissionId="SFA_UPDATE"/>
+    <SecurityPermission description="Delete operations in the CRM." permissionId="SFA_DELETE"/>
+    <SecurityPermission description="ALL operations in the CRM." permissionId="SFA_ADMIN"/>
+    <SecurityPermission description="Limited view operations in the CRM." permissionId="SFA_ROLE_VIEW"/>
+    <SecurityPermission description="Limited update operations in the CRM." permissionId="SFA_ROLE_UPDATE"/>
+    
+    <!-- add admin to SUPER permission group -->
+    <SecurityGroupPermission groupId="SUPER" permissionId="MARKETING_ADMIN"/>
+    <SecurityGroupPermission groupId="SUPER" permissionId="SFA_ADMIN"/>
+    
+</entity-engine-xml>

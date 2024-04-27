@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<entity-engine-xml>
+    <JobSandbox jobId="8000" jobName="BackOrder Notification" runTime="2000-01-01 00:00:00.000" serviceName="checkInventoryAvailability" poolId="pool" runAsUser="system" tempExprId="MIDNIGHT_DAILY" maxRecurrenceCount="-1"/>
+    <JobSandbox jobId="8001" jobName="Re-Try Failed Auths" runTime="2000-01-01 01:00:00.000" serviceName="retryFailedAuths" poolId="pool" runAsUser="system" tempExprId="MIDNIGHT_DAILY" maxRecurrenceCount="-1"/>
+    <!-- Schedule this job if you want orders older than 30 days to be automatically cancelled
+    <JobSandbox jobId="8002" jobName="Order Auto-Cancel" runTime="2000-01-01 03:00:00.000" serviceName="autoCancelOrderItems" poolId="pool" runAsUser="system" tempExprId="MIDNIGHT_DAILY" maxRecurrenceCount="-1"/>
+    -->
+    <JobSandbox jobId="8003" jobName="Run Auto-Reorders" runTime="2000-01-01 03:00:00.000" serviceName="runShoppingListAutoReorder" poolId="pool" runAsUser="system" tempExprId="MIDNIGHT_DAILY" maxRecurrenceCount="-1"/>
+    <JobSandbox jobId="8004" jobName="Re-Try Failed Auths NSF" runTime="2000-01-01 01:00:00.000" serviceName="retryFailedAuthNsfs" poolId="pool" runAsUser="system" tempExprId="MIDNIGHT_DAILY" maxRecurrenceCount="-1"/>
+    <JobSandbox jobId="8005" jobName="Extend expired Subscriptions" runTime="2000-01-01 03:00:00.000" serviceName="runSubscriptionAutoReorders" poolId="pool" runAsUser="system" tempExprId="MIDNIGHT_DAILY" maxRecurrenceCount="-1"/>
+    <JobSandbox jobId="8006" jobName="Cancels all orders after date" runTime="2009-12-03 03:00:00.000" serviceName="cancelAllBackOrders" poolId="pool" runAsUser="system" tempExprId="MIDNIGHT_DAILY" maxRecurrenceCount="-1"/>
+    <JobSandbox jobId="8007" jobName="Replacement Held Order Auto-Cancel" runTime="2000-01-01 00:00:00.000" serviceName="autoCancelReplacementOrders" poolId="pool" runAsUser="system" tempExprId="MIDNIGHT_DAILY" maxRecurrenceCount="-1"/>
+    <JobSandbox jobId="8008" jobName="Create Also Bought Product Associations" runTime="2000-01-01 00:00:00.000" serviceName="createAlsoBoughtProductAssocs" poolId="pool" runAsUser="system" tempExprId="MIDNIGHT_DAILY" maxRecurrenceCount="-1"/>
+    <JobSandbox jobId="8009" jobName="Delete auto-save shopping list for anonymous users" runTime="2000-01-01 00:00:00.000" serviceName="autoDeleteAutoSaveShoppingList" poolId="pool" runAsUser="system" tempExprId="MIDNIGHT_DAILY" maxRecurrenceCount="-1"/>
+    <JobSandbox jobId="8010" jobName="Run Nominated Service on Subscription Expiry" runTime="2014-04-21 00:00:00.000" serviceName="runServiceOnSubscriptionExpiry" poolId="pool" runAsUser="system" tempExprId="MIDNIGHT_DAILY" maxRecurrenceCount="-1"/>
+
+    <!-- Example populateBestSellingCategory job
+    <RuntimeData runtimeDataId="POPBESTSELLCAT">
+        <runtimeInfo><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+            <ofbiz-ser>
+                <map-HashMap>
+                    <map-Entry>
+                        <map-Key>
+                            <std-String value="productCategoryId"/>
+                        </map-Key>
+                        <map-Value>
+                            <std-String value="BEST-SELL-2"/>
+                        </map-Value>
+                    </map-Entry>
+                    <map-Entry>
+                        <map-Key>
+                            <std-String value="productStoreId"/>
+                        </map-Key>
+                        <map-Value>
+                            <std-String value="ScipioShop"/>
+                        </map-Value>
+                    </map-Entry>
+                    <map-Entry>
+                        <map-Key>
+                            <std-String value="maxProducts"/>
+                        </map-Key>
+                        <map-Value>
+                            <std-Integer value="100"/>
+                        </map-Value>
+                    </map-Entry>
+                    <map-Entry>
+                        <map-Key>
+                            <std-String value="orderDateDays"/>
+                        </map-Key>
+                        <map-Value>
+                            <std-Integer value="30"/>
+                        </map-Value>
+                    </map-Entry>
+                </map-HashMap>
+            </ofbiz-ser>
+        ]]></runtimeInfo>
+    </RuntimeData>
+    <JobSandbox jobId="POPBESTSELLCAT" jobName="Populate best-selling category" runTime="2014-04-21 00:00:00.000" serviceName="populateBestSellingCategory" runtimeDataId="POPBESTSELLCAT" poolId="pool" runAsUser="system" tempExprId="MIDNIGHT_DAILY" maxRecurrenceCount="-1"/>
+    -->
+</entity-engine-xml>

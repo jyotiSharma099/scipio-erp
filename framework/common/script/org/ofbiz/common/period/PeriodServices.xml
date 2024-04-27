@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+    <!-- CustomTimePeriod Services -->
+    <simple-method method-name="createCustomTimePeriod" short-description="Create a CustomTimePeriod">
+        <check-permission permission="PERIOD_MAINT">
+            <fail-property resource="CommonUiLabels" property="CommonGenericPermissionError"/>
+        </check-permission>
+        <check-errors/>
+
+        <make-value entity-name="CustomTimePeriod" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+
+        <sequenced-id sequence-name="CustomTimePeriod" field="customTimePeriodId"/>
+        <set from-field="customTimePeriodId" field="newEntity.customTimePeriodId"/>
+        <field-to-result field="customTimePeriodId" result-name="customTimePeriodId"/>
+
+        <create-value value-field="newEntity"/>
+    </simple-method>
+    <simple-method method-name="updateCustomTimePeriod" short-description="Update a CustomTimePeriod">
+        <check-permission permission="PERIOD_MAINT">
+            <fail-property resource="CommonUiLabels" property="CommonGenericPermissionError"/>
+        </check-permission>
+        <check-errors/>
+
+        <make-value entity-name="CustomTimePeriod" value-field="lookupPKMap"/>
+        <set-pk-fields map="parameters" value-field="lookupPKMap"/>
+        <find-by-primary-key map="lookupPKMap" value-field="lookedUpValue"/>
+        <set-nonpk-fields map="parameters" value-field="lookedUpValue"/>
+        <store-value value-field="lookedUpValue"/>
+    </simple-method>
+    <simple-method method-name="deleteCustomTimePeriod" short-description="Delete a CustomTimePeriod">
+        <check-permission permission="PERIOD_MAINT">
+            <fail-property resource="CommonUiLabels" property="CommonGenericPermissionError"/>
+        </check-permission>
+        <check-errors/>
+
+        <make-value entity-name="CustomTimePeriod" value-field="lookupPKMap"/>
+        <set-pk-fields map="parameters" value-field="lookupPKMap"/>
+        <find-by-primary-key map="lookupPKMap" value-field="lookedUpValue"/>
+        <remove-value value-field="lookedUpValue"/>
+    </simple-method>
+</simple-methods>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<test-suite suite-name="productcosttests"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/test-suite.xsd">
+
+    <test-case case-name="cost-tests">
+        <simple-method-test location="component://product/script/org/ofbiz/product/test/CostTests.xml"/>
+    </test-case>
+</test-suite>

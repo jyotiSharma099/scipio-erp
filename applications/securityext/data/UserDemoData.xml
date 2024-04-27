@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<entity-engine-xml>
+    <!-- OFBiz Core security -->
+    <Party partyId="_NA_" partyTypeId="PERSON"/>
+    <Person partyId="_NA_"/>
+    <PartyRole partyId="_NA_" roleTypeId="CARRIER"/>
+    <PartyRole partyId="_NA_" roleTypeId="_NA_"/>
+
+    <Party partyId="admin" partyTypeId="PERSON"/>
+    <Person firstName="THE" lastName="ADMINISTRATOR" middleName="PRIVILEGED" partyId="admin" personalTitle="Mr."/>
+    <PartyRole partyId="admin" roleTypeId="BUYER"/>
+    <PartyRole partyId="admin" roleTypeId="MANAGER"/>
+    <PartyRole partyId="admin" roleTypeId="ORDER_CLERK"/>
+    <PartyRole partyId="admin" roleTypeId="SHIPMENT_CLERK"/>
+    <PartyRole partyId="admin" roleTypeId="SALES_REP"/>
+    <PartyRole partyId="admin" roleTypeId="_NA_"/>
+
+    <Party partyId="ltdadmin" partyTypeId="PERSON"/>
+    <Person firstName="Limited" lastName="Administrator" middleName="" partyId="ltdadmin" personalTitle="Mr."/>
+    <PartyRole partyId="ltdadmin" roleTypeId="ORDER_CLERK"/>
+    <PartyRole partyId="ltdadmin" roleTypeId="LTD_ADMIN"/>
+    <PartyRole partyId="ltdadmin" roleTypeId="_NA_"/>
+    <PartyContactMech partyId="ltdadmin" contactMechId="admin" fromDate="2003-01-01 00:00:00.0" allowSolicitation="Y"/>
+    
+    <!-- Adding another limited admin record(i.e with partyId ltdadmin1) to test role based security -->
+    
+    <Party partyId="ltdadmin1" partyTypeId="PERSON"/>
+    <Person firstName="Limited" lastName="Administrator1" middleName="" partyId="ltdadmin1" personalTitle="Mr."/>
+    <PartyRole partyId="ltdadmin1" roleTypeId="ORDER_CLERK"/>
+    <PartyRole partyId="ltdadmin1" roleTypeId="LTD_ADMIN"/>
+    <PartyRole partyId="ltdadmin1" roleTypeId="_NA_"/>
+    <PartyContactMech partyId="ltdadmin1" contactMechId="admin" fromDate="2003-01-01 00:00:00.0" allowSolicitation="Y"/>
+
+    <Party partyId="externaluser" partyTypeId="PERSON"/>
+    <Person firstName="External" lastName="User" middleName="" partyId="externaluser" personalTitle="Mr."/>
+    <PartyRole partyId="externaluser" roleTypeId="SUPPLIER"/>
+    <PartyContactMech partyId="externaluser" contactMechId="admin" fromDate="2003-01-01 00:00:00.0" allowSolicitation="Y"/>
+
+    <Party partyId="bizadmin" partyTypeId="PERSON"/>
+    <Person partyId="bizadmin" firstName="Business" lastName="Administrator"/>
+    <PartyRole partyId="bizadmin" roleTypeId="BUYER"/>
+    <PartyRole partyId="bizadmin" roleTypeId="MANAGER"/>
+    <PartyRole partyId="bizadmin" roleTypeId="ORDER_CLERK"/>
+    <PartyRole partyId="bizadmin" roleTypeId="SHIPMENT_CLERK"/>
+    <PartyRole partyId="bizadmin" roleTypeId="SALES_REP"/>
+    <PartyRole partyId="bizadmin" roleTypeId="_NA_"/>
+    <PartyContactMech partyId="bizadmin" contactMechId="admin" fromDate="2003-01-01 00:00:00.0" allowSolicitation="Y"/>
+
+    <UserLogin userLoginId="admin" partyId="admin"/>
+    <UserLogin userLoginId="flexadmin" partyId="admin"/>
+    <UserLogin userLoginId="demoadmin" partyId="admin"/>
+    <UserLogin userLoginId="ltdadmin" partyId="ltdadmin"/>
+    <UserLogin userLoginId="ltdadmin1" partyId="ltdadmin1"/>
+    <UserLogin userLoginId="bizadmin" partyId="bizadmin"/>
+    
+    <EmailTemplateSetting emailTemplateSettingId="EMAIL_PASSWORD" subject="New Password Sent (${userLoginId})" fromAddress="test@scipioerp.com"
+        description="Used to send a new password at user request"/>
+
+</entity-engine-xml>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<entity-engine-xml>
+    <InventoryItem facilityId="ScipioShopWarehouse" locationSeqId="TLTLTLLL01"
+        inventoryItemId="TEST_9000" inventoryItemTypeId="NON_SERIAL_INV_ITEM" productId="MAT_A_COST" ownerPartyId="Company" currencyUomId="USD" unitCost="9"/>
+    <InventoryItemDetail inventoryItemId="TEST_9000" inventoryItemDetailSeqId="0001" effectiveDate="2001-05-13 12:00:00.0" availableToPromiseDiff="4" quantityOnHandDiff="4"/>
+    <InventoryItem facilityId="ScipioShopWarehouse" locationSeqId="TLTLTLLL01"
+        inventoryItemId="TEST_9001" inventoryItemTypeId="NON_SERIAL_INV_ITEM" productId="MAT_B_COST" ownerPartyId="Company" currencyUomId="USD" unitCost="7"/>
+    <InventoryItemDetail inventoryItemId="TEST_9001" inventoryItemDetailSeqId="0001" effectiveDate="2001-05-13 12:00:00.0" availableToPromiseDiff="6" quantityOnHandDiff="6"/>
+
+</entity-engine-xml>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<simple-map-processors xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+  <simple-map-processor name="deletePaymentMethod">
+    <process field="paymentMethodId"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingPaymentMethodIdMissing"/></not-empty></process>
+  </simple-map-processor>
+
+  <!-- CreditCard map procs -->
+  <simple-map-processor name="createCreditCard">
+    <make-in-string field="expireDate">
+      <in-field field="expMonth"/>
+      <constant>/</constant>
+      <in-field field="expYear"/>
+    </make-in-string>
+    <process field="partyId"><copy/></process>
+    <process field="companyNameOnCard"><copy/></process>
+    <process field="titleOnCard"><copy/></process>
+    <process field="firstNameOnCard"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingFirstNameOnCardMissing"/></not-empty></process>
+    <process field="middleNameOnCard"><copy/></process>
+    <process field="lastNameOnCard"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingLastNameOnCardMissing"/></not-empty></process>
+    <process field="suffixOnCard"><copy/></process>
+    <process field="cardType"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingCardTypeMissing"/></not-empty></process>
+    <process field="cardNumber">
+        <copy/>
+        <not-empty>
+            <fail-property resource="AccountingUiLabels" property="AccountingCardNumberMissing"/>
+        </not-empty>
+        <validate-method method="isAnyCard" class="org.ofbiz.base.util.UtilValidate">
+            <fail-property resource="AccountingUiLabels" property="AccountingCardNumberIncorrect"/>
+        </validate-method>
+    </process>
+    <process field="contactMechId"><copy/></process>
+    <process field="description"><copy/></process>
+    <process field="expMonth"><not-empty><fail-property resource="AccountingUiLabels" property="AccountingExpirationMonthMissing"/></not-empty></process>
+    <process field="expYear"><not-empty><fail-property resource="AccountingUiLabels" property="AccountingExpirationYearMissing"/></not-empty></process>
+    <process field="expireDate">
+        <copy/>
+        <validate-method method="isDateAfterToday"><fail-property resource="AccountingUiLabels" property="AccountingExpirationDateIsBeforeToday"/></validate-method>
+    </process>
+  </simple-map-processor>
+
+  <simple-map-processor name="updateCreditCard">
+    <make-in-string field="expireDate">
+      <in-field field="expMonth"/>
+      <constant>/</constant>
+      <in-field field="expYear"/>
+    </make-in-string>
+    <process field="paymentMethodId"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingCreditCardPaymentMethodIdMissing"/></not-empty></process>
+    <process field="partyId"><copy/></process>
+    <process field="companyNameOnCard"><copy/></process>
+    <process field="titleOnCard"><copy/></process>
+    <process field="firstNameOnCard"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingFirstNameOnCardMissing"/></not-empty></process>
+    <process field="middleNameOnCard"><copy/></process>
+    <process field="lastNameOnCard"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingLastNameOnCardMissing"/></not-empty></process>
+    <process field="suffixOnCard"><copy/></process>
+    <process field="cardType"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingCardTypeMissing"/></not-empty></process>
+    <process field="cardNumber">
+        <copy/>
+        <not-empty>
+            <fail-property resource="AccountingUiLabels" property="AccountingCardNumberMissing"/>
+        </not-empty>
+        <!-- FIXME Commented out because of OFBIZ-6920, a better solution would be do encrypt the card number when showing screen and decrypt when validating data
+             Anyway the only reason of changing a card number while this card is still valid
+             is because the number have been wrongly entered. Then better to delete and create a new one -->
+        <!-- <validate-method method="isAnyCard" class="org.ofbiz.base.util.UtilValidate">
+            <fail-property resource="AccountingUiLabels" property="AccountingCardNumberIncorrect"/>
+        </validate-method> -->
+    </process>
+    <process field="contactMechId"><copy/></process>
+    <process field="description"><copy/></process>
+    <process field="expMonth"><not-empty><fail-property resource="AccountingUiLabels" property="AccountingExpirationMonthMissing"/></not-empty></process>
+    <process field="expYear"><not-empty><fail-property resource="AccountingUiLabels" property="AccountingExpirationYearMissing"/></not-empty></process>
+    <process field="expireDate">
+        <copy/>
+        <validate-method method="isDateAfterToday"><fail-property resource="AccountingUiLabels" property="AccountingExpirationDateIsBeforeToday"/></validate-method>
+    </process>
+  </simple-map-processor>
+
+  <!-- EftAccount map procs -->
+  <simple-map-processor name="createEftAccount">
+    <process field="partyId"><copy/></process>
+    <process field="description"><copy/></process>
+    <process field="bankName"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingBankNameMissing"/></not-empty></process>
+    <process field="routingNumber"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingRoutingNumberMissing"/></not-empty></process>
+    <process field="accountType"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingAccountTypeMissing"/></not-empty></process>
+    <process field="accountNumber"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingAccountNumberMissing"/></not-empty></process>
+    <process field="nameOnAccount"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingNameOnAccountMissing"/></not-empty></process>
+    <process field="companyNameOnAccount"><copy/></process>
+    <process field="contactMechId"><copy/></process>
+  </simple-map-processor>
+  <simple-map-processor name="updateEftAccount">
+    <process field="paymentMethodId"><copy/><not-empty><fail-property resource="AccountingUiLabels" property="AccountingEFTAccountPaymentMethodIdMissing"/></not-empty></process>
+    <process field="description"><copy/></process>
+    <!-- also call createEftAccount after calling updateEftAccount -->
+  </simple-map-processor>
+</simple-map-processors>

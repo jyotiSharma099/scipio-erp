@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <description>Temporal Expression Events Configuration File</description>
+    
+    <handler name="service" type="request" class="org.ofbiz.webapp.event.ServiceEventHandler"/>
+
+    <!-- Temporal expression event mapping -->
+    <request-map uri="createTemporalExpression">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createTemporalExpression"/>
+        <response name="success" type="request" value="editTemporalExpression"/>
+    </request-map>
+    <request-map uri="updateTemporalExpression">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="updateTemporalExpression"/>
+        <response name="success" type="request" value="editTemporalExpression"/>
+    </request-map>
+    <request-map uri="createTemporalExpressionAssoc">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="createTemporalExpressionAssoc"/>
+        <response name="success" type="request" value="editTemporalExpression"/>
+    </request-map>
+    <request-map uri="deleteTemporalExpressionAssoc">
+        <security https="true" auth="true"/>
+        <event type="service" invoke="deleteTemporalExpressionAssoc"/>
+        <response name="success" type="request" value="editTemporalExpression"/>
+    </request-map>
+
+    <!-- TO DO -->
+    <request-map uri="editTemporalExpression">
+        <security https="true" auth="true"/>
+        <response name="success" type="none"/>
+    </request-map>
+</site-conf>

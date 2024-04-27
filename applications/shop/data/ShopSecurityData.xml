@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+<entity-engine-xml>
+    <SecurityGroup description="Customer user of ECOMMERCE Limited access to own account" groupId="ECOMMERCE_CUSTOMER"/>
+    <SecurityGroupPermission groupId="ECOMMERCE_CUSTOMER" permissionId="CONTENTMGR_ROLE_CREATE"/>
+    <SecurityGroupPermission groupId="ECOMMERCE_CUSTOMER" permissionId="CONTENTMGR_ROLE_UPDATE"/>
+</entity-engine-xml>

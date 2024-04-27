@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+    <form name="LookupComputerHardware" target="LookupComputerHardware" title="" type="single"
+        header-row-style="header-row"> <!-- orig: default-table-style=-style="basic-table" -->
+        <auto-fields-entity entity-name="FixedAsset" default-field-type="hidden"/>
+        <field name="fixedAssetId" title="${uiLabelMap.AccountingFixedAssetId}"><text-find/></field>
+        <field name="fixedAssetName" title="${uiLabelMap.AccountingFixedAssetName}"><text-find/></field>
+        <field name="fixedAssetTypeId"><hidden value="COMPUTER_HARDWARE"/></field>
+        <field name="classEnumId">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" entity-name="Enumeration" key-field-name="enumId">
+                    <entity-constraint name="enumTypeId" operator="equals" value="FXAST_COMPU_HARDWARE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitAction" title="${uiLabelMap.CommonFind}" widget-style="${styles.link_run_sys} ${styles.action_find}"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListLookupComputerHardware" list-name="listIt" title="" type="list" paginate-target="LookupComputerHardware"
+        odd-row-style="alternate-row"> <!-- orig: default-table-style=-style="basic-table hover-bar" -->
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FixedAsset"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="fixedAssetId" title="${uiLabelMap.AccountingFixedAssetId}" widget-style="${styles.link_nav_info_id}">
+            <hyperlink also-hidden="false" target-type="plain" description="${fixedAssetId}" target="javascript:set_value('${fixedAssetId}')"/>
+        </field>
+        <field name="fixedAssetName" title="${uiLabelMap.CommonName}"><display/></field>
+        <field name="classEnumId"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+    </form>
+
+    <form name="LookupComputerSoftware" target="LookupComputerSoftware" title="" type="single"
+        header-row-style="header-row"> <!-- orig: default-table-style=-style="basic-table" -->
+        <auto-fields-entity entity-name="FixedAsset" default-field-type="hidden"/>
+        <field name="fixedAssetId" title="${uiLabelMap.AccountingFixedAssetId}"><text-find/></field>
+        <field name="fixedAssetName" title="${uiLabelMap.AccountingFixedAssetName}"><text-find/></field>
+        <field name="fixedAssetTypeId"><hidden value="COMPUTER_SOFTWARE"/></field>
+        <field name="classEnumId">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" entity-name="Enumeration" key-field-name="enumId">
+                    <entity-constraint name="enumTypeId" operator="equals" value="FXAST_COMPU_SOFTWARE"/>
+                    <entity-order-by field-name="description"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="noConditionFind"><hidden value="Y"/><!-- if this isn't there then with all fields empty no query will be done --></field>
+        <field name="submitAction" title="${uiLabelMap.CommonFind}" widget-style="${styles.link_run_sys} ${styles.action_find}"><submit button-type="button"/></field>
+    </form>
+
+    <form name="ListLookupComputerSoftware" list-name="listIt" title="" type="list" paginate-target="LookupComputerSoftware"
+        odd-row-style="alternate-row"> <!-- orig: default-table-style=-style="basic-table hover-bar" -->
+        <actions>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="FixedAsset"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="fixedAssetId" title="${uiLabelMap.AccountingFixedAssetId}" widget-style="${styles.link_nav_info_id}">
+            <hyperlink also-hidden="false" target-type="plain" description="${fixedAssetId}" target="javascript:set_value('${fixedAssetId}')"/>
+        </field>
+        <field name="fixedAssetName" title="${uiLabelMap.CommonName}"><display/></field>
+        <field name="classEnumId"><display-entity entity-name="Enumeration" key-field-name="enumId"/></field>
+    </form>
+</forms>

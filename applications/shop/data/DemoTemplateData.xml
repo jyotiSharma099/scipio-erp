@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<entity-engine-xml>
+    <DataResource dataResourceId="TPL_XML_MB" dataResourceTypeId="LOCAL_FILE" dataTemplateTypeId="FTL" objectInfo="component://shop/webapp/shop/content/tpl_mb_content.ftl" createdDate="2004-06-14 11:40:15.818" createdByUserLogin="admin" lastModifiedDate="2004-06-14 11:40:15.818" lastModifiedByUserLogin="admin"/>
+</entity-engine-xml>

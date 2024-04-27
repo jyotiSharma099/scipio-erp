@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<entity-engine-xml>
+    <Party partyId="accountant_group" partyTypeId="PARTY_GROUP"/>
+    <PartyGroup partyId="accountant_group" groupName="Accountant Group"/>
+    <PartyRole partyId="accountant_group" roleTypeId="ORGANIZATION_ROLE"/>
+    <PartyRole partyId="accountant_group" roleTypeId="_NA_"/>
+    <PartyRelationship partyIdFrom="Company" partyIdTo="accountant_group" partyRelationshipTypeId="GROUP_ROLLUP" roleTypeIdFrom="_NA_" roleTypeIdTo="_NA_" fromDate="2001-01-01 12:00:00.0"/>
+
+    <Party partyId="accountingadmin" partyTypeId="PERSON"/>
+    <Person partyId="accountingadmin" firstName="Accounting" lastName="Administrator"/>
+    <PartyRole partyId="accountingadmin" roleTypeId="ACCOUNTANT"/>
+    <PartyRole partyId="accountingadmin" roleTypeId="EMPLOYEE"/>
+    <PartyRole partyId="accountingadmin" roleTypeId="_NA_"/>
+    <UserLogin userLoginId="accountingadmin" currentPassword="{SHA}4afca3ceb9bb4b053efaf77766b5323163bd2266" partyId="accountingadmin" passwordHint=""/>
+    <UserLoginSecurityGroup groupId="ACCTG_FUNCTNL_ADMIN" userLoginId="accountingadmin" fromDate="2001-01-01 12:00:00.0"/>    
+
+    <PartyRelationship partyIdFrom="Company" partyIdTo="accountingadmin" partyRelationshipTypeId="EMPLOYMENT" roleTypeIdFrom="INTERNAL_ORGANIZATIO" roleTypeIdTo="EMPLOYEE" fromDate="2001-01-01 12:00:00.0"/>
+    <PartyRelationship partyIdFrom="accountant_group" partyIdTo="accountingadmin" partyRelationshipTypeId="GROUP_ROLLUP" roleTypeIdFrom="ORGANIZATION_ROLE" roleTypeIdTo="ACCOUNTANT" fromDate="2001-01-01 12:00:00.0"/>
+    
+</entity-engine-xml>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+
+    <simple-method method-name="migrateWorkEffortContactMech" short-description="Migrate data from OldWorkEffortContactMech to WorkEffortContactMech">
+        <entity-condition entity-name="OldWorkEffortContactMech" list="oldWorkEffortContactMechs"/>
+        <now-timestamp field="fromDate"/>
+        <iterate list="oldWorkEffortContactMechs" entry="oldWorkEffortContactMech">
+            <make-value entity-name="WorkEffortContactMech" value-field="workEffortContactMech"/>
+            <set field="workEffortContactMech.workEffortId" from-field="oldWorkEffortContactMech.workEffortId"/>
+            <set field="workEffortContactMech.contactMechId" from-field="oldWorkEffortContactMech.contactMechId"/>
+            <set field="workEffortContactMech.fromDate" from-field="fromDate"/>
+            <create-value value-field="workEffortContactMech"/>
+        </iterate>
+    </simple-method>
+</simple-methods>

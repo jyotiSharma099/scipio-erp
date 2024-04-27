@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<entity-engine-xml>
+    <Geo abbreviation="JHR" geoCode="01" geoId="MY-01" geoName="Johor" geoTypeId="STATE"/>
+    <Geo abbreviation="KDH" geoCode="02" geoId="MY-02" geoName="Kedah" geoTypeId="STATE"/>
+    <Geo abbreviation="KTN" geoCode="03" geoId="MY-03" geoName="Kelantan" geoTypeId="STATE"/>
+    <Geo abbreviation="MLK" geoCode="04" geoId="MY-04" geoName="Malacca" geoTypeId="STATE"/>
+    <Geo abbreviation="NSN" geoCode="05" geoId="MY-05" geoName="Negeri Sembilan" geoTypeId="STATE"/>
+    <Geo abbreviation="PHG" geoCode="06" geoId="MY-06" geoName="Pahang" geoTypeId="STATE"/>
+    <Geo abbreviation="PNG" geoCode="07" geoId="MY-07" geoName="Penang" geoTypeId="STATE"/>
+    <Geo abbreviation="PRK" geoCode="08" geoId="MY-08" geoName="Perak" geoTypeId="STATE"/>
+    <Geo abbreviation="PLS" geoCode="09" geoId="MY-09" geoName="Perlis" geoTypeId="STATE"/>
+    <Geo abbreviation="SGR" geoCode="10" geoId="MY-10" geoName="Selangor" geoTypeId="STATE"/>
+    <Geo abbreviation="TRG" geoCode="11" geoId="MY-11" geoName="Terengganu" geoTypeId="STATE"/>
+    <Geo abbreviation="SBH" geoCode="12" geoId="MY-12" geoName="Sabah" geoTypeId="STATE"/>
+    <Geo abbreviation="SRW" geoCode="13" geoId="MY-13" geoName="Sarawak" geoTypeId="STATE"/>
+    <Geo abbreviation="KUL" geoCode="14" geoId="MY-14" geoName="Federal Territory of Kuala Lumpur" geoTypeId="TERRITORY"/>
+    <Geo abbreviation="LBN" geoCode="15" geoId="MY-15" geoName="Federal Territory of Labuan" geoTypeId="TERRITORY"/>
+    <Geo abbreviation="PJY" geoCode="16" geoId="MY-16" geoName="Federal Territory of Putrajaya" geoTypeId="TERRITORY"/>
+
+    <GeoAssoc geoId="MYS" geoIdTo="MY-01" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-02" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-03" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-04" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-05" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-06" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-07" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-08" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-09" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-10" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-11" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-12" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-13" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-14" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-15" geoAssocTypeId="REGIONS"/>
+    <GeoAssoc geoId="MYS" geoIdTo="MY-16" geoAssocTypeId="REGIONS"/>
+</entity-engine-xml>
+

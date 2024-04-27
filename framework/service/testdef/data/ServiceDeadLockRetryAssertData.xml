@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+<entity-engine-xml>
+    <!-- assert data for service dead lock recovery test -->
+    <!-- NOTE we don't know which thread (A or B) these will be from because that is a race condition thing decided by
+        the database about which transaction to terminate, and the terminated one will be the one that re-tries and
+        make it into the database at the end. -->
+    <TestingType testingTypeId="SVCLRT_A" description="New description for SVCLRT_A"/>
+    <TestingType testingTypeId="SVCLRT_B" description="New description for SVCLRT_B"/>
+    <!-- these two are both changed only by their respective threads, checking to make sure both threads succeeded -->
+    <TestingType testingTypeId="SVCLRT_AONLY" description="New description for SVCLRT_AONLY; this is only changed by thread A so if it doesn't match something happened to thread A!"/>
+    <TestingType testingTypeId="SVCLRT_BONLY" description="New description for SVCLRT_BONLY; this is only changed by thread B so if it doesn't match something happened to thread B!"/>
+</entity-engine-xml>

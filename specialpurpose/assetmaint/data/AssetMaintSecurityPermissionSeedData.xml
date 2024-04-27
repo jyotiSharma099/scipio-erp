@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+<entity-engine-xml>
+    <!-- Asset Maintenance security -->
+    <SecurityPermission description="ALL Asset Maintenance operations." permissionId="ASSETMAINT_ADMIN"/>
+    <SecurityPermission description="Asset Maintenance View permission." permissionId="ASSETMAINT_VIEW"/>
+    <SecurityPermission description="Asset Maintenance Create operations." permissionId="ASSETMAINT_CREATE"/>
+    <SecurityPermission description="Asset Maintenance Update operations." permissionId="ASSETMAINT_UPDATE"/>
+    <SecurityPermission description="Asset Maintenance Delete operations." permissionId="ASSETMAINT_DELETE"/>
+
+    <!-- Super Security group -->
+    <SecurityGroupPermission groupId="SUPER" permissionId="ASSETMAINT_ADMIN"/>
+</entity-engine-xml>

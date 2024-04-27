@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<entity-engine-xml>
+    <ContactMech contactMechId="9125" contactMechTypeId="TELECOM_NUMBER"/>
+    <TelecomNumber contactMechId="9125" countryCode="1" areaCode="801" contactNumber="555-5555"/>
+    <PartyContactMech partyId="DemoCustomer" contactMechId="9125" fromDate="2001-05-13 00:00:00.000" allowSolicitation="Y"/>
+    <PartyContactMechPurpose partyId="DemoCustomer" contactMechId="9125" contactMechPurposeTypeId="PHONE_HOME" fromDate="2001-05-13 00:00:00.000"/>
+
+    <ContactMech contactMechId="9126" contactMechTypeId="EMAIL_ADDRESS" infoString="test@scipioerp.com"/>
+    <PartyContactMech partyId="DemoCustomer" contactMechId="9126" fromDate="2001-05-13 00:00:00.000" allowSolicitation="Y"/>
+    <PartyContactMechPurpose partyId="DemoCustomer" contactMechId="9126" contactMechPurposeTypeId="PRIMARY_EMAIL" fromDate="2001-05-13 00:00:00.000"/>
+</entity-engine-xml>

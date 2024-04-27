@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<ofbiz-component name="base"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/ofbiz-component.xsd">
+    <resource-loader name="main" type="component"/>
+    <classpath type="dir" location="dtd"/>
+    <classpath type="jar" location="build/lib/*"/>
+    <classpath type="dir" location="config"/>
+    <classpath type="jar" location="lib/*"/>
+    <classpath type="jar" location="lib/ant/*"/>
+    <classpath type="jar" location="lib/commons/*"/>
+    <classpath type="jar" location="lib/j2eespecs/*"/>
+    <classpath type="jar" location="lib/media/*"/><!-- SCIPIO: Added 2017-07-10 -->
+    <classpath type="jar" location="lib/scripting/*"/>
+
+    <test-suite loader="main" location="testdef/basetests.xml"/>
+
+    <!-- load the naming (JNDI) server -->
+    <container name="naming-container" loaders="rmi" class="org.ofbiz.base.container.NamingServiceContainer">
+        <property name="host" value="0.0.0.0"/>
+        <property name="port" value="1099"/>
+    </container>
+
+</ofbiz-component>

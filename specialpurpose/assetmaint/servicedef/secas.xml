@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<service-eca xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/service-eca.xsd">
+
+    <!-- ECAs used to extend service permission checking -->
+    <eca service="fixedAssetPermissionCheck" event="return" run-on-failure="true">
+        <condition field-name="hasPermission" operator="equals" value="false" type="Boolean"/>
+        <action service="assetMaintPermissionCheck" mode="sync" result-to-result="true"/>
+    </eca>
+
+    <eca service="facilityGenericPermission" event="return" run-on-failure="true">
+        <condition field-name="hasPermission" operator="equals" value="false" type="Boolean"/>
+        <action service="assetMaintPermissionCheck" mode="sync" result-to-result="true"/>
+    </eca>
+
+    <eca service="workEffortGenericPermission" event="return" run-on-failure="true">
+        <condition field-name="hasPermission" operator="equals" value="false" type="Boolean"/>
+        <action service="assetMaintPermissionCheck" mode="sync" result-to-result="true"/>
+    </eca>
+
+    <eca service="catalogPermissionCheck" event="return" run-on-failure="true">
+        <condition field-name="hasPermission" operator="equals" value="false" type="Boolean"/>
+        <action service="assetMaintPermissionCheck" mode="sync" result-to-result="true"/>
+    </eca>
+
+    <eca service="partyBasePermissionCheck" event="return" run-on-failure="true">
+        <condition field-name="hasPermission" operator="equals" value="false" type="Boolean"/>
+        <action service="assetMaintPermissionCheck" mode="sync" result-to-result="true"/>
+    </eca>
+
+</service-eca>

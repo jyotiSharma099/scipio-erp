@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+    <!-- MarketingCampaignRole methods -->
+    <simple-method method-name="createMarketingCampaignRole" short-description="Add Role To MarketingCampaign">
+        <!-- allow if userLogin.partyId = parameters.partyId or has permission -->
+        <if>
+            <condition>
+                <and>
+                    <if-compare-field field="userLogin.partyId" to-field="parameters.partyId" operator="not-equals" />
+                    <not><if-has-permission permission="MARKETING" action="_CREATE" /></not>
+                </and>
+            </condition>
+            <then>
+                <add-error>
+                    <fail-property resource="MarketingUiLabels.xml" property="MarketingCreatePermissionError" />
+                </add-error>
+            </then>
+        </if>
+        <entity-one entity-name="MarketingCampaignRole" value-field="marketingCampaignRole" />
+        <if-empty field="marketingCampaignRole">
+            <make-value entity-name="MarketingCampaignRole" value-field="marketingCampaignRole" map="parameters" />
+            <create-value value-field="marketingCampaignRole" />
+            <check-errors />
+        </if-empty>
+    </simple-method>
+</simple-methods>

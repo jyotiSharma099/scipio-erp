@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+<entity-engine-xml>
+    <!-- Asset Maintenance security -->
+    <SecurityGroup description="Asset Maintenance Admin group, has all maintenance permissions." groupId="ASSETMAINTADMIN"/>
+    <SecurityGroup description="Asset Maintenance Technician group, has view and update." groupId="ASSETMAINTTECH"/>
+
+    <SecurityGroupPermission groupId="ASSETMAINTADMIN" permissionId="ASSETMAINT_ADMIN"/>
+
+    <SecurityGroupPermission groupId="ASSETMAINTTECH" permissionId="ASSETMAINT_VIEW"/>
+    <SecurityGroupPermission groupId="ASSETMAINTTECH" permissionId="ASSETMAINT_UPDATE"/>
+
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="ASSETMAINT_ADMIN"/>
+</entity-engine-xml>

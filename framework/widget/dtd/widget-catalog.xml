@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
+                         "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<!--
+  Comment the DTD declaration to avoid looking for it on the web.
+  Alternatively we can place a copy of the DTD locally and refer to it.
+-->
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <!-- <public publicId="-//W3C//DTD SVG 1.0//EN" uri="svg10.dtd"/> -->
+
+  <system systemId="http://ofbiz.apache.org/dtds/widget-common.xsd" uri="widget-common.xsd"/>
+  <system systemId="http://ofbiz.apache.org/dtds/widget-form.xsd" uri="widget-form.xsd"/>
+  <system systemId="http://ofbiz.apache.org/dtds/widget-menu.xsd" uri="widget-menu.xsd"/>
+  <system systemId="http://ofbiz.apache.org/dtds/widget-screen.xsd" uri="widget-screen.xsd"/>
+  <system systemId="http://ofbiz.apache.org/dtds/widget-tree.xsd" uri="widget-tree.xsd"/>
+  <system systemId="http://ofbiz.apache.org/dtds/compound-widgets.xsd" uri="compound-widgets.xsd"/>
+</catalog>

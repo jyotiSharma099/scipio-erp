@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+    <simple-method method-name="createCommunicationEventOrder" short-description="Create a CommunicationEventOrder">
+        <check-permission permission="ORDERMGR" action="_CREATE">
+            <fail-property resource="OrderErrorUiLabels" property="OrderCreateCommunicationEventProductPermissionError"/>
+        </check-permission>
+        <check-errors/>
+        <make-value entity-name="CommunicationEventOrder" value-field="newEntity"/>
+        <set-pk-fields map="parameters" value-field="newEntity"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <create-value value-field="newEntity"/>
+    </simple-method>
+    <simple-method method-name="removeCommunicationEventOrder" short-description="Remove a CommunicationEventOrder">
+        <check-permission permission="ORDERMGR" action="_CREATE">
+            <fail-property resource="OrderErrorUiLabels" property="OrderRemoveCommunicationEventOrderPermissionError"/>
+        </check-permission>
+        <check-errors/>
+        <entity-one entity-name="CommunicationEventOrder" value-field="eventOrder"/>
+        <remove-value value-field="eventOrder"/>
+    </simple-method>
+</simple-methods>

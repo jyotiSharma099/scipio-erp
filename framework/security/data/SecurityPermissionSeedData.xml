@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+<entity-engine-xml>
+    <!-- OFBiz Core security -->
+    
+    <!--  administrative security groups -->
+
+    <!--  Security 2.0 base permissions -->
+    <SecurityPermission permissionId="access" description="Base ACCESS permission"/>
+    <SecurityPermission permissionId="create" description="Base CREATE permission"/>
+    <SecurityPermission permissionId="read" description="Base READ permission"/>
+    <SecurityPermission permissionId="update" description="Base UPDATE permission"/>
+    <SecurityPermission permissionId="delete" description="Base DELETE permission"/>
+    <SecurityPermission permissionId="OFBTOOLS_VIEW" description="Permission to access the Stock OFBiz Manager Applications."/>
+
+    <!-- normally only permissions in this file, however permission group SUPER is an exception -->
+    <SecurityGroup groupId="SUPER" description="Super admin group, has all *_ADMIN permission loaded as seed data" groupName="Super"/>
+    <SecurityGroupPermission groupId="SUPER" permissionId="OFBTOOLS_VIEW"/>
+
+    <!-- System UserLogin Account - see additional data in SecurityExtData -->
+    <UserLogin userLoginId="system" enabled="N" isSystem="Y"/>
+    <UserLoginSecurityGroup groupId="SUPER" userLoginId="system" fromDate="2001-01-01 12:00:00.0"/>
+    <!-- Anonymous UserLogin is referenced by services in various components -->
+    <UserLogin userLoginId="anonymous" enabled="N"/>
+    
+    <SecurityGroupPermission groupId="SUPER" permissionId="access"/>
+    <SecurityGroupPermission groupId="SUPER" permissionId="create"/>
+    <SecurityGroupPermission groupId="SUPER" permissionId="read"/>
+    <SecurityGroupPermission groupId="SUPER" permissionId="update"/>
+    <SecurityGroupPermission groupId="SUPER" permissionId="delete"/>
+    
+</entity-engine-xml>

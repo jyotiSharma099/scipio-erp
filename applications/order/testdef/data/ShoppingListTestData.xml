@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<entity-engine-xml>
+    <!-- SCIPIO: The default product store is now ScipioShop -->
+    <ShoppingList shoppingListId="DemoWishList" listName="Demo Wish List" partyId="DemoCustomer" shoppingListTypeId="SLT_WISH_LIST" productStoreId="ScipioShop" isActive="Y" currencyUom="USD" isPublic="N"/>
+    <ShoppingListItem shoppingListId="DemoWishList" shoppingListItemSeqId="00001" productId="CAM-2644" quantity="5" productStoreId="ScipioShop"/>
+    <ShoppingListItem shoppingListId="DemoWishList" shoppingListItemSeqId="00002" productId="CDR-1111" quantity="2" productStoreId="ScipioShop"/>
+    <ShoppingListItem shoppingListId="DemoWishList" shoppingListItemSeqId="00003" productId="KB-5569" quantity="10" productStoreId="ScipioShop"/>
+</entity-engine-xml>

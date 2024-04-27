@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is subject to the terms and conditions defined in the
+files 'LICENSE' and 'NOTICE', which are part of this source
+code package.
+-->
+
+<component-loader xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/component-loader.xsd">
+    <load-components parent-directory="framework"/>
+    <load-components parent-directory="themes"/>
+    <load-components parent-directory="applications"/>
+    <load-components parent-directory="specialpurpose"/>
+    
+    <!-- SCIPIO: 2016-06-30: Also load from addons folder (supersedes specialpurpose but acts more or less like hot-deploy) -->
+    <load-components parent-directory="addons"/>
+    
+    <load-components parent-directory="hot-deploy"/>
+</component-loader>
